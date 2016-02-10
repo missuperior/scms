@@ -1,0 +1,12 @@
+* {margin:0px;
+   padding:0px;}
+   
+#wrapper {width:980px;
+		  height:400px;
+		  margin:0 auto;}
+
+
+.header{
+    width:980px; height:100px; float:left; display:inline;
+}
+

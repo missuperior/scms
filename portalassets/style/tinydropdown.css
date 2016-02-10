@@ -1,0 +1,20 @@
+.nav {height:22px; color:#000; text-shadow:1px 1px #888; z-index:1000}
+.menu a {float:left; color:#000; text-decoration:none; height:22px; padding-top:8px
+}
+.menu span {float:left; color:#eee; text-decoration:none; width:auto; height:22px; padding-top:8px}
+.menu a:hover {color:#291870}
+.menu {list-style:none; font:14px Arial,Verdana; text-align:center; width:995px; margin-left: -20px; margin-top: 0px;}
+.menu li {position:relative; float:left; width:150px; z-index:1000; top: 0px; left: 0px;}
+.menu ul {display:none; position:absolute; font:normal 13px Arial,Verdana; top:36px; left:0; background: #003d43; display:none; list-style:none;}
+.menu ul li {float:none; border-top:1px solid #ccc; width: 200px; margin-left: -40px; text-align:left; padding-left: 10px;}
+.menu ul li a, li.menuhover li a, li.menuhover li.menuhover li a {float:none; display:block; background:none; height:22px; padding-top:5px}
+.menu ul li a:hover, li.menuhover li a:hover, li.menuhover li.menuhover li a:hover {color:#ffffff; font-weight: bold; height:22px; text-align:left;}
+.menu ul li span, li.menuhover li span, li.menuhover li.menuhover li span {float:none; display:block; background:none; height:22px; padding-top:5px; color: White; width: 150px;}
+
+.menu ul ul {left:0; top:0;}
+.menu li.submenu {font-weight:bold}
+.menu li.noborder {border-top:none}
+li.menuhover a, li.menuhover li.menuhover a {color:#ffffff; width: 200px; text-align:left;  height: 22px; text-align:left;}
+li.menuhover span, li.menuhover li.menuhover span {color:#ffffff; font-weight: bold; width: 100px; height: 22px;}
+#info {width:auto; background:#000}
+#info li {width:auto; border-top:none; padding:8px 10px; color:#000; text-shadow:1px 1px #fff; text-align:left}

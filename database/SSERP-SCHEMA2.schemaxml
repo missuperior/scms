@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sserp</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="adrs" view="standard">
+<left>98</left>
+<top>0</top>
+<width>195</width>
+<height>277</height>
+<sql_create_table>CREATE TABLE `adrs` (
+  `Sid` int(11) NOT NULL AUTO_INCREMENT,
+  `Cmpn` varchar(255) NOT NULL,
+  `Form` varchar(255) NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `FName` varchar(255) NOT NULL,
+  `Contact` varchar(255) NOT NULL,
+  `Prg` varchar(255) NOT NULL,
+  `HST` varchar(255) NOT NULL,
+  `Arr` varchar(255) NOT NULL,
+  `Twc` varchar(255) NOT NULL,
+  `Phone` varchar(255) NOT NULL,
+  `Camp` varchar(255) NOT NULL,
+  PRIMARY KEY (`Sid`)
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="asresults" view="standard">
+<left>549</left>
+<top>172</top>
+<width>207</width>
+<height>354</height>
+<sql_create_table>CREATE TABLE `asresults` (
+  `Rid` int(11) NOT NULL AUTO_INCREMENT,
+  `Program` varchar(255) NOT NULL,
+  `SType` varchar(255) NOT NULL,
+  `Session` varchar(255) NOT NULL,
+  `Bch` varchar(255) NOT NULL,
+  `Sem` varchar(255) NOT NULL,
+  `Roll` varchar(255) NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `FName` varchar(255) NOT NULL,
+  `Address` varchar(255) NOT NULL,
+  `Subject` varchar(255) NOT NULL,
+  `Cr` int(11) NOT NULL,
+  `Ag` float NOT NULL,
+  `Total` float NOT NULL,
+  `TTot` int(11) NOT NULL,
+  `Perc` float NOT NULL,
+  `Grade` text NOT NULL,
+  PRIMARY KEY (`Rid`)
+) ENGINE=MyISAM AUTO_INCREMENT=36 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="attendance" view="standard">
+<left>322</left>
+<top>3</top>
+<width>187</width>
+<height>363</height>
+<sql_create_table>CREATE TABLE `attendance` (
+  `Aid` int(11) NOT NULL AUTO_INCREMENT,
+  `Roll` varchar(255) NOT NULL,
+  `Prg` varchar(255) NOT NULL,
+  `SType` varchar(255) NOT NULL,
+  `Ses` varchar(255) NOT NULL,
+  `Bch` varchar(255) NOT NULL,
+  `Sem` varchar(255) NOT NULL,
+  `Sft` varchar(255) NOT NULL,
+  `Sbj` varchar(255) NOT NULL,
+  `Tch` varchar(255) NOT NULL,
+  `ADate` date NOT NULL,
+  `Stm` time NOT NULL,
+  `Etm` time NOT NULL,
+  `Att` varchar(255) NOT NULL,
+  `Camp` int(11) NOT NULL,
+  `Usr` varchar(255) NOT NULL,
+  PRIMARY KEY (`Aid`)
+) ENGINE=MyISAM AUTO_INCREMENT=33604 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="baccounts" view="standard">
+<left>325</left>
+<top>384</top>
+<width>187</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `baccounts` (
+  `Aid` int(11) NOT NULL AUTO_INCREMENT,
+  `Accno` varchar(255) NOT NULL,
+  `AType` varchar(255) NOT NULL,
+  `Bid` int(11) NOT NULL,
+  PRIMARY KEY (`Aid`)
+) ENGINE=MyISAM AUTO_INCREMENT=18 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="banks" view="standard">
+<left>550</left>
+<top>2</top>
+<width>202</width>
+<height>158</height>
+<sql_create_table>CREATE TABLE `banks` (
+  `Bid` int(11) NOT NULL AUTO_INCREMENT,
+  `Bank` varchar(255) NOT NULL,
+  `Address` varchar(255) NOT NULL,
+  `Phone` int(11) NOT NULL,
+  `City` int(11) NOT NULL,
+  PRIMARY KEY (`Bid`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

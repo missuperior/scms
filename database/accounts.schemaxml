@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sserp_new</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="bank_accounts" view="colnames">
+<left>56</left>
+<top>224</top>
+<width>122</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `bank_accounts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account_no` varchar(255) NOT NULL,
+  `account_type` varchar(255) NOT NULL,
+  `bank_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="banks" view="colnames">
+<left>61</left>
+<top>43</top>
+<width>126</width>
+<height>158</height>
+<sql_create_table>CREATE TABLE `banks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `bank_name` varchar(255) NOT NULL,
+  `bank_address` varchar(255) NOT NULL,
+  `bank_phone` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="student_fee_package" view="colnames">
+<left>580</left>
+<top>35</top>
+<width>155</width>
+<height>306</height>
+<sql_create_table>CREATE TABLE `student_fee_package` (
+  `id` int(11) unsigned NOT NULL,
+  `student_id` int(11) unsigned NOT NULL,
+  `program_id` int(11) unsigned NOT NULL,
+  `total_semesters` int(11) unsigned NOT NULL,
+  `admission` int(11) unsigned NOT NULL,
+  `misc` int(11) unsigned NOT NULL,
+  `semester_fee` int(11) unsigned NOT NULL,
+  `discount` int(11) unsigned NOT NULL,
+  `additional_discount` int(11) unsigned NOT NULL,
+  `fine` int(11) NOT NULL,
+  `net` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `remarks` varchar(255) NOT NULL,
+  `operator_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="installments" view="colnames">
+<left>392</left>
+<top>38</top>
+<width>155</width>
+<height>260</height>
+<sql_create_table>CREATE TABLE `installments` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) unsigned NOT NULL,
+  `program_id` int(11) unsigned NOT NULL,
+  `semester_id` int(11) unsigned NOT NULL,
+  `fee` int(11) unsigned NOT NULL,
+  `fine` int(11) unsigned NOT NULL,
+  `additional_discount` int(11) unsigned NOT NULL,
+  `payable` int(11) unsigned NOT NULL,
+  `due_date` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `operator_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="paid_payments" view="colnames">
+<left>227</left>
+<top>40</top>
+<width>125</width>
+<height>294</height>
+<sql_create_table>CREATE TABLE `paid_payments` (
+  `id` int(11) unsigned NOT NULL,
+  `student_id` int(11) unsigned NOT NULL,
+  `installment_id` int(11) unsigned NOT NULL,
+  `program_id` int(11) unsigned NOT NULL,
+  `semester_id` int(11) unsigned NOT NULL,
+  `paid_date` date NOT NULL,
+  `challan_no` int(11) unsigned NOT NULL,
+  `amount` int(11) unsigned NOT NULL,
+  `bank_fine` int(11) unsigned NOT NULL,
+  `bank_id` int(11) unsigned NOT NULL,
+  `account_id` int(11) unsigned NOT NULL,
+  `operator_id` varchar(255) NOT NULL,
+  `campus_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

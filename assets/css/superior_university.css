@@ -1,0 +1,293 @@
+* {margin:0px;
+   padding:0px;}
+   
+#wrapper {width:980px;
+		  height:900px;
+		  margin:0 auto;}
+
+#topbar {width:980px;
+		 height:30px;
+		 background-color:#006e6f;}	 
+		 
+#header {width:980px;
+		 height:112px;
+		 background-color:#006e6f;
+		 border-bottom:1px solid black;}
+
+#header img {margin-left:300px;
+		     border:2px solid #006e6f;
+			 border-radius:15px;}
+
+#header img:hover {opacity:0.6;}		 
+		 
+#menu {width:980px;
+	   height:31px;
+	   background:url(../images/menu_bg.jpg);
+	   background-repeat:repeat-x;
+	   border-bottom:1px solid white;}
+
+#menu li {float:left;
+		  display:inline;
+		  padding-left:30px;
+		  margin-top:5px;}
+
+#menu a {color:#000;
+		 text-decoration:none;}
+		 
+#menu a:hover {color:#fff;}
+
+#slider {width:980px;
+		 height:700px;
+		 float:left; 
+		 display:inline;
+		 }
+
+#areaundermenu {width:980px;
+				height:510px;
+				/*background-color:#D8D8D8;*/
+				background-color:#CCEEFF;/*
+				background-color:#BDBDBD;*/
+				float:left;
+padding-bottom: 30px;}
+				
+.box {float:left;
+	  display:inline;
+	  width:285px;
+	  height:230px;
+	  margin-left:30px;
+	  border-bottom:1px solid #006e6f;
+	  padding-top:15px;}
+
+.box h4 {margin-left:40px;
+		 margin-bottom:5px;}
+
+.box h4:hover {color:#006e6f;}		 
+	  
+.thickbottomborder {float:left;
+					display:inline;
+					width:250px;
+					background-color:#006e6f;
+					height:15px;
+					margin-left:20px;
+					margin-bottom:10px;} 
+		  
+.listsundermenu {width:250px;
+				float:left;
+				display:inline;}
+
+.listsundermenu li {list-style-image:url(../images/bullet.jpg);
+					margin-left:50px;}				
+				 		  
+.listsundermenu a {text-decoration:none;
+				   color:#006e6f;}
+
+.listsundermenu a:hover {color:#000;}
+
+#somepicsandcomments {width:980px;
+					  height:417px;
+					  float:left;
+					  display:inline;
+					  margin-bottom:10px;
+					  background-color:#CCEEFF;}
+.fourportions {width:470px;
+				height:200px;
+				float:left;
+				display:inline;
+				margin-left:10px;
+				margin-bottom:10px;}
+
+.image {width:250px;
+		height:200px;
+		float:left;
+		display:inline;
+		border:2px solid #006e6f;
+		border-radius:5px;
+		background-color:white;}
+
+.image img {width:240px;
+		    height:190px;
+			margin-top:5px;
+			margin-left:5px;}
+				
+		
+.headingandpara {width:200px;
+				 height:200px;
+				 float:left;
+				 display:inline;
+				 padding-left:10px;}
+
+.headingandpara p {color:#006e6f;
+				   text-align:justify;}	
+
+.button {background-color:white;
+		 color:#006e6f;
+		 margin-left:100px;
+		 margin-top:20px;
+		 border-radius:10px;
+		 width:100px;
+		 border:1px solid white;
+		 cursor:pointer;}				   			 
+
+.headingandpara h4:hover {color:#006e6f;}				 	
+											  
+#footer {width:980px;
+		 height:190px;
+		 float:left;
+		 display:inline;
+		 background-color:#006e6f;
+		 background-image:url(../images/footer_bg.jpg);
+		 background-repeat:repeat-x;
+		 border-top: 2px solid #00757f;}
+
+.portionsoffooter {width:140px;
+				   border-right:1px solid #006e6f;
+				   float:left;
+				   display:inline;
+				   margin-top:15px;
+				   margin-left:20px;
+				   text-align:right;
+				   padding-right:10px;} 		 				   		  
+		  
+.portionsoffooter a {text-decoration:none;
+                                           color:#006e6f;}
+					 
+.portionsoffooter a:hover {color:white;}					 		  
+		  
+.portionsoffooter li {list-style:none;
+					  padding-bottom:10px;}
+
+.middleportionsoffooter {width:190px;
+				   		border-right:1px solid #006e6f;
+				   		float:left;
+				   		display:inline;
+				   		margin-top:15px;
+				   		margin-left:90px;
+				   		}
+
+/*.middleportionsoffooter img {width:85px;
+							 height:85px;}*/
+							 
+.lastportionsoffooter {width:140px;
+				   border-right:1px solid #006e6f;
+				   float:left;
+				   display:inline;
+				   margin-top:15px;
+				   margin-left:10px;
+				   text-align:left;
+				   padding-right:10px;} 		 				   		  
+		  
+.lastportionsoffooter a {text-decoration:none;
+					 color:#006e6f;}
+					 
+.lastportionsoffooter a:hover {color:white;}
+
+.lastportionsoffooter li {list-style:none;
+						  padding-bottom:10px;}							 
+							 
+.border {border-right:none;}
+
+#socialmedialinks {width:340px;
+				   height:50px;
+				   float:left;
+				   display:inline;
+				   margin-left:300px;
+				   background-color:#006e6f;
+				   border-radius:20px;
+				   margin-top:2px;}						 							  
+		  
+#socialmedialinks img {padding-left:50px;}	
+
+#socialmedialinks p {color:#00fffe;
+					 padding-left:15px;}
+
+
+
+.main-content
+{
+  margin: 20px;
+}
+.main-content h1{
+  margin-bottom: 20px;
+}
+
+.table-header{
+  background-color: #00757f;
+  padding: 6px 0 6px 12px;
+  color: #fff;
+  width: 690px;
+}
+.profile_table {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #a9c6c9;
+	border-collapse: collapse;
+        text-align: left;
+        width: 700px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+}
+.profile_table th {
+	padding: 8px;
+        border: 1px solid #cacaca;
+        width: 150px;
+}
+.profile_table td {
+	padding: 8px;
+        border: 1px solid #cacaca;
+}
+.profile_table tr:nth-child(odd)
+{
+  background-color:  #f4f4f4;
+}
+.profile_table tr:nth-child(even)
+{
+  background-color:  #fff;
+}
+
+
+
+.table-header-st-acc {
+  background-color: #00757f;
+  padding: 6px 0 6px 12px;
+  color: #fff;
+  width: 690px;
+}
+.st_scc_table {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #a9c6c9;
+	border-collapse: collapse;
+        text-align: left;
+        width: 700px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+}
+.st_scc_table th {
+	padding: 8px;
+        border: 1px solid #cacaca;
+        width: 150px;
+}
+.st_scc_table td {
+	padding: 8px;
+        border: 1px solid #cacaca;
+}
+.st_scc_table tr:nth-child(odd)
+{
+  background-color:  #f4f4f4;
+}
+.st_scc_table tr:nth-child(even)
+{
+  background-color:  #fff;
+}
+
+.header-course-rg{
+  background-color: #00757f;
+  padding: 6px 0 6px 12px;
+  color: #fff;
+  width: 100%;
+  margin-bottom: 20px;
+}

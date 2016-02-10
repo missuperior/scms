@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">sserp_new</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="obtained_marks" view="colnames">
+<left>23</left>
+<top>9</top>
+<width>162</width>
+<height>414</height>
+<sql_create_table>CREATE TABLE `obtained_marks` (
+  `id` int(11) unsigned NOT NULL,
+  `sheet_id` varchar(255) NOT NULL,
+  `student_id` int(11) unsigned NOT NULL,
+  `program_id` int(11) unsigned NOT NULL,
+  `session_id` int(11) unsigned NOT NULL,
+  `section_id` int(11) unsigned NOT NULL,
+  `semester_id` int(11) unsigned NOT NULL,
+  `subject_id` int(11) unsigned NOT NULL,
+  `shift` varchar(255) NOT NULL,
+  `assignment` int(11) unsigned NOT NULL,
+  `presentation` int(11) unsigned NOT NULL,
+  `quiz` int(11) unsigned NOT NULL,
+  `project` int(11) unsigned NOT NULL,
+  `paper` int(11) unsigned NOT NULL,
+  `total` int(11) unsigned NOT NULL,
+  `attendance` varchar(255) NOT NULL,
+  `term` varchar(255) NOT NULL,
+  `operator_id` varchar(255) NOT NULL,
+  `campus_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="program_roadmap" view="colnames">
+<left>223</left>
+<top>23</top>
+<width>116</width>
+<height>175</height>
+<sql_create_table>CREATE TABLE `program_roadmap` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `program_id` int(11) unsigned NOT NULL,
+  `session_id` int(11) unsigned NOT NULL,
+  `semester_id` int(11) unsigned NOT NULL,
+  `shift` varchar(255) NOT NULL,
+  `subject_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="sheets" view="colnames">
+<left>414</left>
+<top>32</top>
+<width>112</width>
+<height>141</height>
+<sql_create_table>CREATE TABLE `sheets` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sheet_no` varchar(255) NOT NULL,
+  `operator_id` varchar(255) NOT NULL,
+  `vdate` date NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+<table name="total_marks" view="colnames">
+<left>611</left>
+<top>17</top>
+<width>152</width>
+<height>277</height>
+<sql_create_table>CREATE TABLE `total_marks` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `sheet_id` varchar(255) NOT NULL,
+  `subject_id` int(11) unsigned NOT NULL,
+  `assignment` int(11) unsigned NOT NULL,
+  `presentation` int(11) unsigned NOT NULL,
+  `quiz` int(11) unsigned NOT NULL,
+  `project` int(11) unsigned NOT NULL,
+  `paper` int(11) unsigned NOT NULL,
+  `total` int(11) unsigned NOT NULL,
+  `term` varchar(255) NOT NULL,
+  `operator_id` varchar(255) NOT NULL,
+  `campus_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>

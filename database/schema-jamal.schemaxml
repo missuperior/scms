@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemadesigner version="6.5">
+<source>
+<database charset="latin1" collation="latin1_swedish_ci">scms_tables</database>
+</source>
+<canvas zoom="100">
+<tables>
+<table name="gen_account_logins" view="colnames">
+<left>0</left>
+<top>0</top>
+<width>175</width>
+<height>192</height>
+<sql_create_table>CREATE TABLE `gen_account_logins` (
+  `acc_login_id` int(11) NOT NULL AUTO_INCREMENT,
+  `acc_login` varchar(100) NOT NULL,
+  `acc_password` varchar(100) NOT NULL,
+  `created_date` date NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  `account_role_id` int(11) NOT NULL,
+  `acc_status` tinyint(2) DEFAULT '1',
+  PRIMARY KEY (`acc_login_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="gen_account_roles" view="colnames">
+<left>280</left>
+<top>33</top>
+<width>148</width>
+<height>107</height>
+<sql_create_table>CREATE TABLE `gen_account_roles` (
+  `account_role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_title` varchar(100) NOT NULL,
+  PRIMARY KEY (`account_role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="gen_sub_roles" view="colnames">
+<left>452</left>
+<top>274</top>
+<width>136</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `gen_sub_roles` (
+  `sub_role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sub_role_title` varchar(150) NOT NULL,
+  `account_role_id` int(11) NOT NULL,
+  PRIMARY KEY (`sub_role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="hr_department_roles" view="colnames">
+<left>28</left>
+<top>247</top>
+<width>129</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `hr_department_roles` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `department_id` int(11) NOT NULL,
+  `sub_role_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="hr_departments" view="colnames">
+<left>506</left>
+<top>33</top>
+<width>151</width>
+<height>124</height>
+<sql_create_table>CREATE TABLE `hr_departments` (
+  `department_id` int(11) NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(255) NOT NULL,
+  `account_role_id` int(11) NOT NULL,
+  PRIMARY KEY (`department_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="member_logins" view="colnames">
+<left>184</left>
+<top>291</top>
+<width>180</width>
+<height>192</height>
+<sql_create_table>CREATE TABLE `member_logins` (
+  `member_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_login` varchar(100) NOT NULL,
+  `member_password` varchar(100) NOT NULL,
+  `sub_role_id` int(11) NOT NULL,
+  `created_date` date DEFAULT NULL,
+  `member_status` tinyint(2) DEFAULT NULL,
+  `flag_check` tinyint(2) DEFAULT NULL,
+  PRIMARY KEY (`member_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+<table name="temporary_accounts" view="colnames">
+<left>630</left>
+<top>287</top>
+<width>156</width>
+<height>158</height>
+<sql_create_table>CREATE TABLE `temporary_accounts` (
+  `account_id` int(11) NOT NULL AUTO_INCREMENT,
+  `department_id` int(11) NOT NULL,
+  `sub_role_id` int(11) NOT NULL,
+  `first_name` varchar(100) DEFAULT NULL,
+  `last_name` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1</sql_create_table>
+</table>
+</tables>
+</canvas>
+</schemadesigner>
