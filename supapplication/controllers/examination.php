@@ -1,5 +1,4 @@
 <?php
-
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
@@ -2152,32 +2151,38 @@ class Examination extends CI_Controller {
     }
 
     public function topperList() {
-        $campaign_id = $this->input->post('campaign');
-        $program_id = $this->input->post('program');
-        $semester = $this->input->post('semester');
+        
+        $campaign_id    = $this->input->post('campaign');
+        $program_id     = $this->input->post('program');
+        $semester       = $this->input->post('semester');
 
         $students = $this->Examination_model->getTopperStudents($campaign_id, $program_id, $semester);
+        
+        $result['program_name'] =   $students[0]['program_name'];
 
-        //echo '<pre>'; print_r($students);die;
+       // echo '<pre>'; print_r($students);die;
 
         foreach ($students AS $key => $row) {
 
-            $array[$key] = $this->Examination_model->getStdGpa($row['student_id'], $semester);
+            $array[$key] = $this->Examination_model->getCGPA_Topper($row['student_id'], $semester,$row['roll_no'],$row['student_name']);
         }
-
+        
+       //  echo '<pre>'; print_r($array);die;
+        
         $sorted_array;
         for ($j = 0; $j < count($array); $j++) {
             for ($i = 0; $i < count($array) - 1; $i ++) {
 
-                if ($array[$i]->gpa < $array[$i + 1]->gpa) {
+                if ($array[$i]['gpa'] < $array[$i + 1]['gpa']) {
                     $temp = $array[$i + 1];
                     $array[$i + 1] = $array[$i];
                     $array[$i] = $temp;
                 }
+                
             }
         }
 
-        // echo '<pre>'; print_r($array);die;
+//         echo '<pre>'; print_r($array);die;
 
         $result['toppers'] = $array;
         $result['semester'] = $semester;
@@ -2201,19 +2206,23 @@ class Examination extends CI_Controller {
 
 
         $students = $this->Examination_model->getTopperStudents_cr($program_id,$section,$batch_id,$session_id);
+        
+        $result['program_name'] =   $students[0]['program_name'];
+        $result['session']      =   $students[0]['session'];
+        $result['batch']        =   $students[0]['batch_type'].' '.$students[0]['batch'];
 
-//        echo '<pre>'; print_r($students);die;
+        //echo '<pre>'; print_r($students);die;
 
         foreach ($students AS $key => $row) {
 
-            $array[$key] = $this->Examination_model->getStdGpa_cr($row['student_id'], $session_id);
+            $array[$key] = $this->Examination_model->getCGPA_Topper_cr($row['student_id'], $session_id,$batch_id, $row['roll_no'],$row['student_name']);
         }
 
         $sorted_array;
         for ($j = 0; $j < count($array); $j++) {
             for ($i = 0; $i < count($array) - 1; $i ++) {
 
-                if ($array[$i]->gpa < $array[$i + 1]->gpa) {
+                if ($array[$i]['gpa'] < $array[$i + 1]['gpa']) {
                     $temp = $array[$i + 1];
                     $array[$i + 1] = $array[$i];
                     $array[$i] = $temp;

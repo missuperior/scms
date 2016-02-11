@@ -63,9 +63,9 @@
                                                          <a  target="_blank" href="<?php echo base_url();?>examination/view_final_result_summary_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
                                                             / Final  Summary                                                                  
                                                         </a>
-<!--                                                         <a  target="_blank" href="<?php echo base_url();?>examination/topperList_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
+                                                         <a  target="_blank" href="<?php echo base_url();?>examination/topperList_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
                                                             / Topper List
-                                                        </a>-->
+                                                        </a>
                                                         
                                                     </td>                                                            
                                                </tr>                                            

@@ -31,11 +31,7 @@
                                     <div class="table-header">
                                         <h3 id="title">Topper List</h3>
                                     </div>
-                                
-                                    <a  href="<?php echo base_url(); ?>examination/class_wise_report_print/<?php echo $campaign_id;?>/<?php echo $program_id;?>/<?php echo $exam_type;?>/<?php echo $semester;?>">
-                                        <img src="<?php echo base_url(); ?>assets/images/print.png" border="0" style="float: left; margin-left: 27px" />
-                                    </a>
-                                
+                                                                    
                                     <table id="example" class="table table-striped table-bordered table-hover">
                                         <thead>
                                            <tr style="font-size: 10px">
@@ -44,7 +40,7 @@
                                            </tr>
                                            <tr style="font-size: 10px">
                                                <td colspan="3"><b><?php  echo 'Semester '.$semester; ?></b></td>
-                                               <td colspan="4"><b><?php  echo $toppers[0]->program_name; ?></b></td>
+                                               <td colspan="4"><b><?php  echo $program_name; ?></b></td>
                                            </tr>
                                          
                                             <tr style="font-size: 10px">
@@ -63,30 +59,21 @@
                                         $total = count($toppers);
                                         $count = 0;
                                         for($c=0; $c < $total; $c++){ 
-                                                $fail_subjects  =   $this->Examination_model->getFailSubjects($toppers[$c]->student_id,$semester);
+                                                $fail_subjects  =   $this->Examination_model->getFailSubjects($toppers[$c]['student_id'],$semester);
                                                 if($fail_subjects == 0){                                                    
                                                    if($count == 3) break;
                                                    
-                                                   // for calculating total obtained marks
-                                                   
-                                                   $marks       =   $this->Examination_model->getTotalMarks($toppers[$c]->student_id,$semester);
-                                                   $total_marks =   0;
-                                                   $total_subjects = 0;
-                                                   foreach($marks AS $row){
-                                                       $total_marks = $total_marks + $row['marks'];
-                                                       $total_subjects++;
-                                                   }
                                             ?>                                                                                     
                                           <tr>
                                             <td><?php echo $c+1; ?></td>
-                                            <td><?php echo $toppers[$c]->roll_no; ?></td>
-                                            <td><?php echo $toppers[$c]->student_name; ?></td>
+                                            <td><?php echo $toppers[$c]['roll_no']; ?></td>
+                                            <td><?php echo $toppers[$c]['student_name']; ?></td>
                                             <td><?php 
-                                            $gpa  = $toppers[$c]->gpa;
+                                            $gpa  = $toppers[$c]['gpa'];
                                             echo number_format("$gpa",2);
                                             ?></td>
-                                            <td><?php echo $total_marks;?></td>
-                                            <td><?php echo 100*$total_subjects;?></td>
+                                            <td><?php echo $toppers[$c]['total_obtained'];?></td>
+                                            <td><?php echo  $toppers[$c]['total_marks'];?></td>
                                             <td>
                                                 <?php 
                                                     if($c==0){echo 'First'; }

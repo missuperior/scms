@@ -31,10 +31,7 @@
                                     <div class="table-header">
                                         <h3 id="title">Topper List</h3>
                                     </div>
-                                
-<!--                                    <a  href="<?php echo base_url(); ?>examination/class_wise_report_print/<?php echo $campaign_id;?>/<?php echo $program_id;?>/<?php echo $exam_type;?>/<?php echo $semester;?>">
-                                        <img src="<?php echo base_url(); ?>assets/images/print.png" border="0" style="float: left; margin-left: 27px" />
-                                    </a>-->
+           
                                 
                                     <table id="example" class="table table-striped table-bordered table-hover">
                                         <thead>
@@ -43,8 +40,9 @@
                                                <td colspan="4"><h3 style="text-align:left">Toppers List</h3></td>
                                            </tr>
                                            <tr style="font-size: 10px">
-                                               <td colspan="3"><b><?php  echo 'Session '.$session_id; ?></b></td>
-                                               <td colspan="4"><b><?php  echo $toppers[0]->program_name; ?></b></td>
+                                               <td colspan="2"><b><?php  echo $session; ?></b></td>
+                                               <td colspan="2"><b><?php  echo $batch; ?></b></td>
+                                               <td colspan="3"><b><?php  echo $program_name.' ('.$section.')'; ?></b></td>
                                            </tr>
                                          
                                             <tr style="font-size: 10px">
@@ -63,40 +61,21 @@
                                         $total = count($toppers);
                                         $count = 0;
                                         for($c=0; $c < $total; $c++){ 
-                                                $fail_subjects  =   $this->Examination_model->getFailSubjectsCR($toppers[$c]->student_id,$batch_id,$session_id);
+                                                $fail_subjects  =   $this->Examination_model->getFailSubjectsCR($toppers[$c]['student_id'],$batch_id,$session_id);
                                                 if($fail_subjects == 0){                                                    
                                                    if($count == 3) break;
                                                    
-                                                   // for calculating total obtained marks
-                                                   
-                                                   $marks              =   $this->Examination_model->getTotalMarks_cr($toppers[$c]->student_id,$session_id,$batch_id);
-                                                   $labmarks           =   $this->Examination_model->getTotalMarks_crLab($toppers[$c]->student_id,$session_id,$batch_id);
-                                                   
-                                                   $total_marks =   0;
-                                                   $total_lab_marks =   0;
-                                                   $total_subjects = 0;
-                                                   
-                                                   foreach($marks AS $row){
-                                                       $total_marks = $total_marks + $row['marks'];
-                                                       $total_subjects++;
-                                                   }
-                                                   
-                                                   foreach($labmarks AS $row){
-                                                       $total_lab_marks = $total_lab_marks + $row['labmarks'];
-                                                   }
-                                                   
-                                                   $totalMarks  =   $total_lab_marks + $total_marks;
                                             ?>                                                                                     
                                           <tr>
                                             <td><?php echo $c+1; ?></td>
-                                            <td><?php echo $toppers[$c]->roll_no; ?></td>
-                                            <td><?php echo $toppers[$c]->student_name; ?></td>
+                                            <td><?php echo $toppers[$c]['roll_no']; ?></td>
+                                            <td><?php echo $toppers[$c]['student_name']; ?></td>
                                             <td><?php 
-                                            $gpa  = $toppers[$c]->gpa;
+                                            $gpa  = $toppers[$c]['gpa'];
                                             echo number_format("$gpa",2);
                                             ?></td>
-                                            <td><?php echo $totalMarks;?></td>
-                                            <td><?php echo 100*$total_subjects;?></td>
+                                            <td><?php echo $toppers[$c]['total_obtained'];?></td>
+                                            <td><?php echo $toppers[$c]['total_marks'];?></td>
                                             <td>
                                                 <?php 
                                                     if($c==0){echo 'First'; }

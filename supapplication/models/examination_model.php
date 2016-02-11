@@ -1642,8 +1642,10 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
      
     
     function getTopperStudents($campaign_id,$program_id,$semester){
-        $query      =   $this->db->query("select final_result.student_id,students.roll_no,students.status from final_result
+        $query      =   $this->db->query("select final_result.semester,final_result.student_id,students.roll_no,students.status,forms.student_name,programs.program_name from final_result
                                             inner join students ON students.student_id = final_result.student_id
+                                            inner join forms ON students.form_id = forms.form_id
+                                            inner join programs ON programs.program_id = forms.program_id
                                             where final_result.campaign_id = $campaign_id and final_result.program_id = $program_id and final_result.semester = $semester and students.status = 'ok'
                                             GROUP BY final_result.student_id
                                             order by final_result.program_id asc
@@ -1653,8 +1655,12 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
     }
     
     function getTopperStudents_cr($program_id,$section,$batch_id,$session_id){
-        $query      =   $this->db->query("select final_result.student_id,students.roll_no,students.status from final_result
+        $query      =   $this->db->query("select batch.*,final_result.session_id,final_result.student_id,students.roll_no,students.status,forms.student_name,programs.program_name,sessions.session from final_result
                                             inner join students ON students.student_id = final_result.student_id
+                                            inner join forms ON students.form_id = forms.form_id
+                                            inner join programs ON programs.program_id = forms.program_id
+                                            inner join sessions ON sessions.session_id = final_result.session_id
+                                            inner join batch ON batch.batch_id = students.batch_id
                                             where 
                                             final_result.program_id = $program_id
                                             and final_result.section = '$section'
@@ -1777,6 +1783,61 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
     }
     
     
+    function getCGPA_Topper($student_id,$semester,$roll_no,$student_name){
+        
+        $query  =   $this->db->query("SELECT final_result.course_id,coursess.credit_hours FROM final_result
+                                        INNER JOIN coursess ON coursess.`course_id` = final_result.`course_id`
+                                        WHERE
+                                        final_result.`student_id` = $student_id AND
+                                        final_result.`semester` = $semester  
+                                        ORDER BY
+                                        final_result.course_id
+                                    ");
+        
+        $courses    =   $query->result_array();
+       
+//        echo '<pre>'; print_r($courses);die;
+        
+        $total_gpa              =   0 ;
+        $total_crdt_hrs         =   0 ;
+        $total_obt              =   0;
+        $total_marks            =   0;
+        
+        foreach($courses AS $row){
+            
+                   $course_id       =   $row['course_id'];
+                   $credit_hrs      =   $row['credit_hours'];
+                   
+                   // get mid marks
+                   $q1          =   $this->db->query("SELECT (mid_value_1+mid_value_2+mid_value_3) AS mid   FROM    mid_result WHERE  student_id = $student_id AND course_id = $course_id ");              
+                   $res1        =   $q1->row();
+                   $mid         =   $res1->mid;
+                   
+                   // get final marks
+                   $q2          =   $this->db->query("SELECT (final_value_1+final_value_2+final_value_3+final_value_4+final_value_5+final_value_6+final_value_7) AS final FROM  final_result    WHERE  student_id = $student_id AND course_id = $course_id");              
+                   $res2        =   $q2->row();
+                   $final       =   $res2->final;
+                   
+                   $total       =   $mid+$final;
+                    
+                    $gpa            =   $this->getGpa($total, $credit_hrs);
+                    
+                    $total_gpa      =   $total_gpa + $gpa;
+                    $total_crdt_hrs =   $total_crdt_hrs + $credit_hrs;         
+                    $total_obt      =   $total_obt + $total;
+                    $total_marks    =   $total_marks + 100;
+        }
+        
+        $cgpa                       =   $total_gpa/$total_crdt_hrs;
+        $array                      =   array('student_id' => $student_id, 'student_name' => $student_name , 'roll_no' => $roll_no, 'gpa' => $cgpa, 'total_obtained' => $total_obt, 'total_marks' => $total_marks);
+        
+        //echo '<pre>'; print_r($array);die;
+        
+        return         $array;
+                
+    }
+    
+    
     function getCGPA_cr($student_id,$session_id,$batch_id){
         
         $query  =   $this->db->query("SELECT final_result.course_id,courses.credit_hours FROM final_result
@@ -1830,9 +1891,73 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                 
     }
     
+    function getCGPA_Topper_cr($student_id,$session_id,$batch_id,$roll_no,$student_name){
+        
+        $query  =   $this->db->query("SELECT final_result.course_id,courses.credit_hours FROM final_result
+                                        INNER JOIN courses ON courses.`course_id` = final_result.`course_id`
+                                        WHERE
+                                        final_result.`student_id` = $student_id AND
+                                        courses.`course_type` = 'Theory' AND
+                                        final_result.`session_id` = $session_id  AND
+                                        final_result.`batch_id` = $batch_id  
+                                        ORDER BY
+                                        final_result.course_id
+                                    ");
+        
+        $courses    =   $query->result_array();
+        
+        //echo '<pre>'; print_r($courses);die;
+       
+        $total_gpa              =   0 ;
+        $total_crdt_hrs         =   0 ;
+         $total_obt             =   0;
+        $total_marks            =   0;
+        
+        foreach($courses AS $key=>$row){
+            
+                   $course_id       =   $row['course_id'];
+                   $credit_hrs      =   $row['credit_hours'];
+                   
+                   // get mid marks
+                   $q1          =   $this->db->query("SELECT (mid_value_1+mid_value_2+mid_value_3) AS mid   FROM    mid_result WHERE    batch_id = $batch_id AND   student_id = $student_id AND course_id = $course_id and session_id = $session_id ");              
+                   $res1        =   $q1->row();
+                   $mid         =   $res1->mid;
+                 
+                   // get final marks
+                   $q2          =   $this->db->query("SELECT (final_value_1+final_value_2+final_value_3+final_value_4+final_value_5+final_value_6+final_value_7) AS final FROM  final_result    WHERE   batch_id = $batch_id AND   student_id = $student_id AND course_id = $course_id  and session_id = $session_id");              
+                   $res2        =   $q2->row();
+                   $final       =   $res2->final;
+                    
+                   // get lab marks 
+                   $lab         =   $this->getLabMarks2($student_id, $batch_id, $course_id, $session_id);
+                   
+                   
+                    if(count($lab) > 0){
+                        $total      =   $mid+$final+$lab;
+                        $credit_hrs =   $credit_hrs + 1;
+                    }else{
+                        $total      =   $mid+$final;
+                    }
+                    
+                    $gpa            =   $this->getGpa($total, $credit_hrs);
+                    
+                    $total_gpa      =   $total_gpa + $gpa;
+                    $total_crdt_hrs =   $total_crdt_hrs + $credit_hrs;    
+                    
+                    $total_obt      =   $total_obt + $total;
+                    $total_marks    =   $total_marks + 100;                   
+        }
+        
+        $cgpa                       =   $total_gpa/$total_crdt_hrs;
+        $array                      =   array('student_id' => $student_id, 'student_name' => $student_name , 'roll_no' => $roll_no, 'gpa' => $cgpa, 'total_obtained' => $total_obt, 'total_marks' => $total_marks);
+        
+        return         $array;
+                
+    }
+    
     // for lab marks
     
-     public function getLabMarks2( $student_id , $batch_id,$course_id){
+     public function getLabMarks2( $student_id , $batch_id,$course_id, $session_id){
         
         $data       = $this->db->query("SELECT  course_id FROM courses WHERE parent_course_id = $course_id AND batch_id = $batch_id" );
         $result     = $data->result_array();
@@ -1843,7 +1968,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
         //echo $course_idl;
         //die;
         if(!empty($course_idl)){
-            $data1 = $this->db->query("SELECT  final_value_1 FROM final_result WHERE student_id = $student_id AND course_id = $course_idl AND batch_id = $batch_id" );
+            $data1 = $this->db->query("SELECT  final_value_1 FROM final_result WHERE student_id = $student_id AND course_id = $course_idl AND batch_id = $batch_id and session_id = $session_id" );
             $result =    $data1->row();
             return $result->final_value_1;
         }else{
