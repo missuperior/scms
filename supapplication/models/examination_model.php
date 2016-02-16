@@ -1845,13 +1845,15 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                                         WHERE
                                         final_result.`student_id` = $student_id AND
                                         courses.`course_type` = 'Theory' AND
-                                        final_result.`session_id` <= $session_id  
+                                        final_result.`session_id` <= $session_id AND  
+                                        final_result.`batch_id` = $batch_id  
                                         ORDER BY
                                         final_result.course_id
                                     ");
         
         $courses    =   $query->result_array();
-       
+               
+     // echo $student_id.'<pre>';  print_r($courses);die;
         $total_gpa              =   0 ;
         $total_crdt_hrs         =   0 ;
         
@@ -1865,13 +1867,15 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                    $res1        =   $q1->row();
                    $mid         =   $res1->mid;
                    
+                    
+                   
                    // get final marks
                    $q2          =   $this->db->query("SELECT (final_value_1+final_value_2+final_value_3+final_value_4+final_value_5+final_value_6+final_value_7) AS final FROM  final_result    WHERE   batch_id = $batch_id AND   student_id = $student_id AND course_id = $course_id");              
                    $res2        =   $q2->row();
                    $final       =   $res2->final;
                    
                    // get lab marks 
-                   $lab         =   $this->getLabMarks2($student_id, $batch_id, $course_id);
+                   $lab         =   $this->getLabMarks2_topper($student_id, $batch_id, $course_id,$session_id);
                    
                    
                     if(count($lab) > 0){
@@ -1880,6 +1884,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                     }else{
                         $total      =   $mid+$final;
                     }
+                    
                     
                     $gpa            =   $this->getGpa($total, $credit_hrs);
                     
@@ -1929,7 +1934,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                    $final       =   $res2->final;
                     
                    // get lab marks 
-                   $lab         =   $this->getLabMarks2($student_id, $batch_id, $course_id, $session_id);
+                   $lab         =   $this->getLabMarks2_topper($student_id, $batch_id, $course_id, $session_id);
                    
                    
                     if(count($lab) > 0){
@@ -1957,7 +1962,29 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
     
     // for lab marks
     
-     public function getLabMarks2( $student_id , $batch_id,$course_id, $session_id){
+     public function getLabMarks2( $student_id , $batch_id,$course_id){
+        
+        $data       = $this->db->query("SELECT  course_id FROM courses WHERE parent_course_id = $course_id AND batch_id = $batch_id" );
+        $result     = $data->result_array();
+        
+        //echo '<pre>';var_dump($result[0]["course_id"]);echo '</pre>';
+        
+        $course_idl = $result[0]["course_id"];
+        //echo $course_idl;
+        //die;
+        if(!empty($course_idl)){
+            $data1 = $this->db->query("SELECT  final_value_1 FROM final_result WHERE student_id = $student_id AND course_id = $course_idl AND batch_id = $batch_id " );
+            $result =    $data1->row();
+            return $result->final_value_1;
+        }else{
+            return null;
+        }
+        
+   }
+    
+    // for lab marks
+    
+     public function getLabMarks2_topper( $student_id , $batch_id,$course_id, $session_id){
         
         $data       = $this->db->query("SELECT  course_id FROM courses WHERE parent_course_id = $course_id AND batch_id = $batch_id" );
         $result     = $data->result_array();

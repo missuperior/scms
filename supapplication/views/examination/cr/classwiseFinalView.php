@@ -130,7 +130,7 @@
                                                                                 $crdt_hrs   =   $students[$i]['credit_hours'];
                                                             }
                                                           
-                                                           // echo '<br>Credit'.$crdt_hrs.'-'.$students[$i]['credit_hours'];
+                                                            echo '<br>Credit'.$crdt_hrs.'-'.$students[$i]['credit_hours'];
                                                                                                                                                                                       
                                                             $res            = $this->Examination_model->getGpa($t_marks,$crdt_hrs);
                                                             $credit_hours   =   $credit_hours+$crdt_hrs;
@@ -143,12 +143,11 @@
                                                 </td>
                                                 
                                             <?php } }
-//                                                        echo '<br>Gpa :'.$gpa;
-//                                                        echo '<br>credit_hours :'.$credit_hours;die;
-                                                        $gpaa = $gpa/$credit_hours;
+//                                                   
+                                                       $gpaa = $gpa/$credit_hours;
                                                         
                                                         if($session_id > $students[$c]['enrolled_session_id']){                                                        
-                                                            $cgpa   =   $this->Examination_model->getLastGpa($students[$c]['student_id'],$gpa,$credit_hours);           
+                                                            $cgpa   =   $this->Examination_model->getCGPA_cr($students[$c]['student_id'],$session_id,$batch_id);           
                                                         }else{
                                                             $cgpa = $gpaa;
                                                         }

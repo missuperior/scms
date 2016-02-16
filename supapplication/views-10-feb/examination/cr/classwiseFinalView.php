@@ -148,7 +148,8 @@
                                                         $gpaa = $gpa/$credit_hours;
                                                         
                                                         if($session_id > $students[$c]['enrolled_session_id']){                                                        
-                                                            $cgpa   =   $this->Examination_model->getLastGpa($students[$c]['student_id'],$gpa,$credit_hours);           
+                                                            $cgpa   =   $this->Examination_model->getCGPA_cr($students[$c]['student_id'],$session_id,$batch_id);           
+                                                            //$cgpa   =   $this->Examination_model->getLastGpa($students[$c]['student_id'],$gpa,$credit_hours);           
                                                         }else{
                                                             $cgpa = $gpaa;
                                                         }
