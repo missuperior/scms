@@ -1393,11 +1393,18 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                                         WHERE
                                         m.student_id = $student_id
                                         AND
+                                        f.student_id = $student_id
+                                        AND
                                         m.student_id = f.student_id
                                         AND 
                                         m.course_id = f.course_id 
                                         AND
                                         f.session_id <= $session_id
+                                        AND
+                                        f.batch_id  = $batch_id
+                                        AND
+                                        m.batch_id  =   $batch_id
+                                            
                                         Group By course_id
                                         ORDER BY course_id ASC
                                         
