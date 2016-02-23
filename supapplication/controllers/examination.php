@@ -289,6 +289,17 @@ class Examination extends CI_Controller {
 
         $this->load->view('examination/course_partial', $result);
     }
+    // get courses list against program
+
+    public function get_Courses_list2() {
+
+        $this->login_check();
+        $program_id = $_POST['program_id'];
+
+        $result['courses'] = $this->Examination_model->getCoursesList($program_id);
+
+        $this->load->view('examination/course_partial2', $result);
+    }
 
     // **************   Start Define Mid and Final Structure
 
@@ -3778,9 +3789,99 @@ class Examination extends CI_Controller {
             $std_gpa_id = $this->Teachers2_model->SaveStdgpa($student_id, $gpa, $session_id, $total_gpa, $total_credit_hours);
         }
     }
+    
 
-    //******************  Class summary report for CR  END ****************************************//
-    //*********************    EDIT / DELETE CR RESULT SHEET END        *******************************************//
+    //******************  Class summary report for CR  END  
+    
+    
+    public function add_datesheet_venue_form(){
+        
+      $this->login_check();
+      
+       $result['campaigns'] = $this->Admin_model->getAllcampaigns2();
+       $result['program'] = $this->Admin_model->getAllprograms();
+       
+      // echo '<pre>'; print_r($result['program']);die;
+      
+      $this->load->view('admin_ace/admin_header');
+      $this->load->view('admin_ace/examination_side_menu');
+      $this->load->view('examination/datesheet/addvenue', $result);
+      $this->load->view('admin_ace/admin_footer');
+      
+    }
+   
+    public function add_datesheet_venue(){
+        
+      $this->login_check();
+      
+      $venue    =   array(
+                            'campaign_id'       =>  $this->input->post('campaign'),
+                            'program_id'        =>  $this->input->post('program'),
+                            'semester'          =>  $this->input->post('semester'),
+                            'venue'             =>  $this->input->post('venue')
+                        );
+      
+      $venue_id =   $this->Examination_model->AddVenue($venue);
+      
+      if($venue_id){
+                        foreach($this->input->post('course') AS $course){
+
+                             $courses  =   array(
+                                        'venue_id'          =>  $venue_id,
+                                        'course_id'         =>  $course
+                                    );
+                        $venue_course_id =   $this->Examination_model->AddVenueCourses($courses); 
+                        }
+                        
+                    $this->session->set_userdata('success_msg', 'Venue Added');
+                    redirect('examination/add_datesheet_venue_form');
+                        
+      }else{                
+                    $this->session->set_userdata('success_msg', 'Venue Not Added');
+                    redirect('examination/add_datesheet_venue_form');
+           }
+            
+    }
+ 
+    
+    
+    public function print_rollno_slips_form() {
+       $this->login_check();
+      
+       $result['campaigns'] = $this->Admin_model->getAllcampaigns2();
+       $result['program']   = $this->Admin_model->getAllprograms();
+       
+      // echo '<pre>'; print_r($result['program']);die;
+      
+      $this->load->view('admin_ace/admin_header');
+      $this->load->view('admin_ace/examination_side_menu');
+      $this->load->view('examination/datesheet/print_rollnoslips_form', $result);
+      $this->load->view('admin_ace/admin_footer');
+    }
+
+    public function print_rollno_slips() {
+
+       
+        $campaign_id    = $_POST['campaign'];
+        $program_id     = $_POST['program'];
+        $semester       = $_POST['semester'];
+        
+        
+        $result['info'] = $this->Examination_model->getRollNoSlipsInfo($campaign_id, $program_id, $semester);
+       // echo '<pre>';print_r($result['info']);die;
+        
+        if (count($result['info']) > 0) {
+            $this->load->view('examination/datesheet/datesheet', $result);
+        } else {
+            $this->session->set_userdata('error_msg', 'Record Not Found ');
+            redirect('examination/print_rollno_slips_form');
+        }
+    }
+    
+    
+    
+    
+    
 }
 
 /* End of file welcome.php */

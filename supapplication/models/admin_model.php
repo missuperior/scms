@@ -757,7 +757,7 @@ class Admin_model extends CI_Model {
         $this->db->join('programs', 'programs.program_id = program_fees.program_id', 'inner');
         $this->db->join('campus', 'campus.campus_id = program_fees.campus_id', 'inner');
         $this->db->join('campaign', 'campaign.campaign_id = program_fees.campaign_id', 'inner');
-        $this->db->where('program_fees.campaign_id',$campaign_id); 
+        //$this->db->where('program_fees.campaign_id',$campaign_id); 
         $this->db->order_by('program_fees.campaign_id', 'DESC'); 
         $query = $this->db->get();
        //echo $this->db->last_query();die;

@@ -2010,6 +2010,49 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
         }
         
    }
-    
-    // **** End Addded By Tariq For Examination ****  \\
+   
+   
+   function AddVenue($venue){
+       $query = $this->db->insert('datesheet_venues', $venue); 
+        return $this->db->insert_id();
+   }
+
+   function AddVenueCourses($courses){
+       $query = $this->db->insert('datesheet_venue_courses', $courses); 
+        return $this->db->insert_id();
+   }
+   
+   function getRollNoSlipsInfo($campaign_id, $program_id, $semester){
+       $query       =   $this->db->query("SELECT forms.`student_name`,forms.`father_name`,students.`roll_no`,programs.`program_name`,dv.venue,dv.venue_id,dv.semester,students.`status` 
+                                            FROM forms
+
+                                            INNER JOIN students ON students.`form_id` = forms.`form_id`
+                                            INNER JOIN programs ON programs.`program_id` = forms.`program_id`
+                                            INNER JOIN datesheet_venues AS dv ON dv.program_id = forms.`program_id`
+
+                                            WHERE 
+                                            
+                                            forms.`campaign_id` = $campaign_id AND
+                                            dv.program_id  = $program_id AND
+                                            dv.semester    = $semester AND
+                                            students.`roll_no` != '' AND 
+                                            students.`status` = 'ok'
+                                            ORDER BY students.roll_no ASC");
+       
+       return   $query->result_array();
+   }
+   
+   function getDatesheetCourses($venue_id){
+             $query       =   $this->db->query("SELECT coursess.`course_name` FROM coursess
+                                                    INNER JOIN datesheet_venue_courses AS dvc ON dvc.course_id = coursess.`course_id`
+                                                    WHERE
+                                                    dvc.venue_id = $venue_id
+
+                                                    ORDER BY coursess.course_id ASC");
+       
+       return   $query->result_array();
+   }
+
+
+   // **** End Addded By Tariq For Examination ****  \\
 }

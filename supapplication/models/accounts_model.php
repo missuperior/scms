@@ -1707,6 +1707,7 @@ function getStudentInstallments2($student_id,$session_id)
                             AND forms.campaign_id = $campaign_id                            
                             AND installments.due_date BETWEEN '$start_date' AND '$end_date'
                             AND challan.status = 0
+                            AND students.status = 'ok'
                             ORDER BY roll_no ASC
                       ");
           
@@ -1726,6 +1727,7 @@ function getStudentInstallments2($student_id,$session_id)
                             AND forms.campaign_id = $campaign_id                            
                             AND installments.due_date BETWEEN '$start_date' AND '$end_date'
                             AND challan.status = 0
+                            AND students.status = 'ok'
                             ORDER BY roll_no ASC
                       ");
           

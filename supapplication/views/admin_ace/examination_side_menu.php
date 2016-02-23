@@ -172,6 +172,31 @@
                     </a>                                      
                 </li> 
             <?php } ?>
+                
+                 
+<!--                <li <?php  if($methd == 'add_datesheet_venue_form' || $methd == 'print_rollno_slips_form') echo  'class="active open" ' ;?>>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-double-angle-right"></i>
+                        Date Sheet Module
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                    <ul class="submenu">
+                        <li <?php echo $methd == 'add_datesheet_venue_form' ? 'class="active" ' : ''; ?>>
+                            <a href="<?php echo base_url()?>examination/add_datesheet_venue_form">
+                                <i class="icon-leaf"></i>
+                                Add Venue
+                            </a>
+                        </li>                       
+                        
+                        <li <?php echo $methd == 'print_rollno_slips_form' ? 'class="active" ' : ''; ?>>
+                            <a href="<?php echo base_url()?>examination/print_rollno_slips_form">
+                                <i class="icon-leaf"></i>
+                                Print Roll No Slips
+                            </a>
+                        </li>                       
+                    </ul>
+                </li>-->
                            
             </ul>
         </li> 
