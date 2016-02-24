@@ -217,7 +217,7 @@ foreach($sessions As $row){
 <table style=" width:100%; float:left; margin-top: 20px;" class="table" >   
     <tbody style="align:center; width:100%;  font-size: 11px; font-weight: normal;">
                     <th style="width:85%; "><p style="text-align: left; font-style: italic; margin-left: 10px;">This certificate is issued on behalf of his/her personal request.</p></th>                                        
-                    <th style="width:15%; "><p style="text-align: left; "><b>CGPA : </b><?php echo ' '.$cgpa/$g_total_credit_hours; ?></p></th>                                        
+                    <th style="width:15%; "><p style="text-align: left; "><b>CGPA : </b><?php echo ' '.number_format($cgpa/$g_total_credit_hours, 2, '.', ''); ?></p></th>                                        
     </tbody>
 </table>
     

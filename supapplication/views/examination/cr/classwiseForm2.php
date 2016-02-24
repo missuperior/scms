@@ -66,6 +66,12 @@
                                                          <a  target="_blank" href="<?php echo base_url();?>examination/topperList_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
                                                             / Topper List
                                                         </a>
+                                                         <a  target="_blank" href="<?php echo base_url();?>examination/add_datesheet_venue_form_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
+                                                            / Add Venue
+                                                        </a>
+                                                        <a  target="_blank" href="<?php echo base_url();?>examination/print_rollno_slips_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
+                                                            / Print Roll No Slips
+                                                        </a>
                                                         
                                                     </td>                                                            
                                                </tr>                                            

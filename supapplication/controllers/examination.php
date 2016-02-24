@@ -3805,7 +3805,7 @@ class Examination extends CI_Controller {
       
       $this->load->view('admin_ace/admin_header');
       $this->load->view('admin_ace/examination_side_menu');
-      $this->load->view('examination/datesheet/addvenue', $result);
+      $this->load->view('examination/datesheet/addVenue', $result);
       $this->load->view('admin_ace/admin_footer');
       
     }
@@ -3844,6 +3844,18 @@ class Examination extends CI_Controller {
     }
  
     
+    public function view_all_venues(){
+        
+        $this->login_check();
+        $result['venues']   =   $this->Examination_model->getAllVenues();
+        
+//        echo '<pre>'; print_r($result);die;
+        
+        $this->load->view('admin_ace/admin_header');
+        $this->load->view('admin_ace/examination_side_menu');
+        $this->load->view('examination/datesheet/viewVenue', $result);
+        $this->load->view('admin_ace/admin_footer');                
+    }    
     
     public function print_rollno_slips_form() {
        $this->login_check();
@@ -3879,7 +3891,97 @@ class Examination extends CI_Controller {
     }
     
     
+    // datesheet Module for Course Registration Programs
     
+      public function add_datesheet_venue_form_cr() {
+
+        $this->login_check();
+
+        $result['program_id']     = $this->uri->segment(3);
+        $result['section']        = $this->uri->segment(4);
+        $result['batch_id']       = $this->uri->segment(5);
+        $result['session_id']     = $this->uri->segment(6);
+        
+        $check_venue      =   $this->Examination_model->checkVenue(array(   'program_id'        =>  $this->uri->segment(3),
+                                                                            'section'           =>  $this->uri->segment(4),
+                                                                            'batch_id'          =>  $this->uri->segment(5),
+                                                                            'session_id'        =>  $this->uri->segment(6)
+                                                                        )
+        );
+
+        if(count($check_venue) > 0 ){
+            
+                $result['venues']   =   $this->Examination_model->getAllVenuesCR($result['section'],$result['program_id'],$result['session_id'],$result['batch_id']);        
+                //        echo '<pre>'; print_r($result);die;
+
+                $this->load->view('admin_ace/admin_header');
+                $this->load->view('admin_ace/examination_side_menu');
+                $this->load->view('examination/datesheet/viewVenueCR', $result);
+                $this->load->view('admin_ace/admin_footer');                
+        }else{
+
+                $this->load->view('admin_ace/admin_header');
+                $this->load->view('admin_ace/examination_side_menu');
+                $this->load->view('examination/datesheet/addVenueCR', $result);
+                $this->load->view('admin_ace/admin_footer');
+        }
+    }
+    
+    
+     public function add_datesheet_venue_cr(){
+        
+      $this->login_check();
+      
+      $venue    =   array(
+                            'session_id'        =>  $this->input->post('session_id'),
+                            'program_id'        =>  $this->input->post('program_id'),
+                            'section'           =>  $this->input->post('section'),
+                            'batch_id'          =>  $this->input->post('batch_id'),
+                            'venue'             =>  $this->input->post('venue')
+                        );
+      
+      $check_venue      =   $this->Examination_model->checkVenue($venue);
+      
+      
+      
+      $venue_id         =   $this->Examination_model->AddVenueCR($venue);
+      
+      if($venue_id){
+                    $this->session->set_userdata('success_msg', 'Venue Added');
+                    redirect('examination/add_datesheet_venue_form_cr');                        
+      }else{                
+                    $this->session->set_userdata('success_msg', 'Venue Not Added');
+                    redirect('examination/add_datesheet_venue_form_cr');
+           }
+            
+    }
+    
+    public function print_rollno_slips_cr() {
+
+       
+        $result['program_id']     = $this->uri->segment(3);
+        $result['section']        = $this->uri->segment(4);
+        $result['batch_id']       = $this->uri->segment(5);
+        $result['session_id']     = $this->uri->segment(6);
+        
+        
+        $result['info'] = $this->Examination_model->getRollNoSlipsInfoCR($result['program_id'], $result['section'], $result['batch_id'], $result['session_id']);
+       // echo '<pre>';print_r($result['info']);die;
+        
+        if (count($result['info']) > 0) {
+            $this->load->view('examination/datesheet/datesheetCR', $result);
+        } else {
+            $this->session->set_userdata('error_msg', 'Record Not Found ');
+            redirect('examination/class_wise_form_cr');
+        }
+    }
+    
+    
+    
+    
+ 
+    
+
     
     
 }

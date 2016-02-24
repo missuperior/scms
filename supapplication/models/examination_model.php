@@ -1882,7 +1882,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                    $final       =   $res2->final;
                    
                    // get lab marks 
-                   $lab         =   $this->getLabMarks2_topper($student_id, $batch_id, $course_id,$session_id);
+                   $lab         =   $this->getLabMarks2( $student_id , $batch_id,$course_id);
                    
                    
                     if(count($lab) > 0){
@@ -2016,11 +2016,37 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
        $query = $this->db->insert('datesheet_venues', $venue); 
         return $this->db->insert_id();
    }
-
+   
    function AddVenueCourses($courses){
        $query = $this->db->insert('datesheet_venue_courses', $courses); 
         return $this->db->insert_id();
    }
+
+   
+   function getAllVenues(){
+       $query       =   $this->db->query("select dv.venue,dv.semester,programs.program_name,campaign.campaign_name from datesheet_venues AS dv
+                                          INNER JOIN programs ON programs.program_id = dv.program_id
+                                          INNER JOIN campaign ON campaign.campaign_id = dv.campaign_id
+
+                                        ");
+       return           $query->result_array();
+   }
+   
+   
+   function getAllVenuesCR($section,$program_id,$session_id,$batch_id){
+       $query       =   $this->db->query("SELECT dv.venue,dv.`section`,programs.program_name,sessions.session FROM datesheet_venues AS dv 
+                                            INNER JOIN programs ON programs.program_id = dv.program_id 
+                                            INNER JOIN sessions ON sessions.session_id = dv.session_id  
+                                            WHERE
+                                            dv.program_id   =   $program_id AND
+                                            dv.session_id   =   $session_id AND
+                                            dv.section      =   '$section' AND
+                                            dv.batch_id     =   $batch_id
+                                        ");
+//       echo $this->db->last_query();die;
+       return           $query->result_array();
+   }
+   
    
    function getRollNoSlipsInfo($campaign_id, $program_id, $semester){
        $query       =   $this->db->query("SELECT forms.`student_name`,forms.`father_name`,students.`roll_no`,programs.`program_name`,dv.venue,dv.venue_id,dv.semester,students.`status` 
@@ -2042,6 +2068,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
        return   $query->result_array();
    }
    
+   
    function getDatesheetCourses($venue_id){
              $query       =   $this->db->query("SELECT coursess.`course_name` FROM coursess
                                                     INNER JOIN datesheet_venue_courses AS dvc ON dvc.course_id = coursess.`course_id`
@@ -2052,6 +2079,51 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
        
        return   $query->result_array();
    }
+   
+   
+   // for CR
+   
+   function checkVenue($venue)
+    {
+        $query = $this->db->get_where('datesheet_venues', $venue);
+//        echo $this->db->last_query();die;
+        return   $query->result_array();
+    }
+   
+   
+   function AddVenueCR($venue){
+       $query = $this->db->insert('datesheet_venues', $venue); 
+        return $this->db->insert_id();
+   }
+
+   function getRollNoSlipsInfoCR($program_id, $section, $batch_id, $session_id){
+       $query       =   $this->db->query("SELECT dv.venue,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
+                                            FROM 
+                                            datesheet_venues AS dv
+                                            INNER JOIN student_sections ON student_sections.`program_id` = dv.`program_id`
+                                            INNER JOIN forms ON forms.`program_id` = dv.`program_id`
+                                            INNER JOIN students ON students.`form_id` = forms.`form_id`
+                                            INNER JOIN sessions ON sessions.`session_id` = dv.`session_id`
+                                            INNER JOIN programs ON programs.`program_id` = dv.`program_id`
+                                            WHERE
+                                            dv.`section` = student_sections.`program_section`
+                                            AND
+                                            dv.`batch_id` = student_sections.`batch_id`
+                                            AND
+                                            student_sections.`student_id` = students.`student_id`
+                                            AND
+                                            students.`status` = 'ok'
+                                            AND
+                                            dv.`program_id` = $program_id AND
+                                            dv.`section` = '$section'   AND
+                                            dv.`session_id` = $session_id AND
+                                            dv.`batch_id`   = $batch_id                                             
+                                            ORDER BY students.roll_no ASC");
+       
+      // echo $this->db->last_query();die;
+       return   $query->result_array();
+   }
+   
 
 
    // **** End Addded By Tariq For Examination ****  \\

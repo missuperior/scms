@@ -30,69 +30,19 @@
                             <div class="widget-body">
                                 <div class="widget-main">                                  
                                     <div class="row-fluid">
-                                        <form  class="form-horizontal" id="initialform" method="POST" action="<?php echo  base_url()?>examination/add_datesheet_venue" enctype="multipart/form-data" />
+                                        <form  class="form-horizontal" id="initialform" method="POST" action="<?php echo  base_url()?>examination/add_datesheet_venue_cr" enctype="multipart/form-data" />
                                     <div class="step-content row-fluid position-relative" id="step-container">
                                             <div class="step-pane active" id="step1">
-                                                                                                  
-                                                <div class="control-group">
-                                                    <label style="width: 130px;" class="control-label" for="email">Campaigns :<img src="<?php echo base_url()?>assets/img/star.jpg" width="6"/></label>
-                                                    <div class="controls" style="margin-left: 140px;">
-                                                        <div class="span12">
-                                                          <select style="width: 400px;" id="campaign" name="campaign" class="chzn-select" data-placeholder="Click to Choose...">
-                                                                <option value="">-- Select Campaign --</option>
-                                                                <?php foreach ($campaigns as $row) { ?>
-                                                                    <option <?php if (set_value('campaign') == $row['campaign_id']) echo '"selected=selected"'; ?> value="<?php echo $row['campaign_id'] ?>"><?php echo $row['campaign_name'] ?></option> <?php } ?>
-                                                                </select>
-                                                        </div>
-                                                    </div>
-                                                  </div>
-                                               
-                                                
-                                                <div class="control-group">
-                                                    <label style="width: 130px;" class="control-label" for="email">Program :<img src="<?php echo base_url()?>assets/img/star.jpg" width="6"/></label>
-                                                    <div class="controls" style="margin-left: 140px;">
-                                                        <div class="span12">
-                                                            <select onchange="getCourses(this.value)" style="width: 400px;" id="program" name="program" class="chzn-select" data-placeholder="Click to Choose...">
-                                                                <option value="">-- Select Program --</option>
-                                                                <?php foreach ($program as $row) { 
-                                                                        if($row['hr_department_id'] != 4){
-                                                                    ?>
-                                                                    <option <?php if (set_value('program') == $row['program_id']) echo 'selected="selected"' ?> value="<?php echo $row['program_id'] ?>"><?php echo $row['program_name'] ?></option> 
-                                                                <?php }} ?>																			
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                  </div>        
-                                                
-                                                <div id="courses">
-                                                    
-                                                </div> 
-                                                
-                                                <div class="control-group">
-                                                    <label style="width: 130px;" class="control-label" for="email">Semester :<img src="<?php echo base_url()?>assets/img/star.jpg" width="6"/></label>
-                                                    <div class="controls" style="margin-left: 140px;">
-                                                        <div class="span12">
-                                                            <select  style="width: 400px;" id="semester" name="semester" class="chzn-select" data-placeholder="Click to Choose...">
-                                                                <option value="">-- Select Semester --</option>
-                                                                <option value="1">Semester 1</option>
-                                                                <option value="2">Semester 2</option>
-                                                                <option value="3">Semester 3</option>
-                                                                <option value="4">Semester 4</option>
-                                                                <option value="5">Semester 5</option>
-                                                                <option value="6">Semester 6</option>
-                                                                <option value="7">Semester 7</option>
-                                                                <option value="8">Semester 8</option>
-                                                                
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                  </div> 
-                                                
+                                                                                                                                                  
                                                 <div class="control-group">
                                                     <label style="width: 130px;" class="control-label" for="email">Venue :<img src="<?php echo base_url()?>assets/img/star.jpg" width="6"/></label>
                                                     <div class="controls" style="margin-left: 140px;">
                                                         <div class="span12">
                                                             <input type="text" name="venue" style="width:388px; height: 50px;" />
+                                                            <input type="hidden" name="program_id" value="<?php echo $program_id; ?>" />
+                                                            <input type="hidden" name="session_id" value="<?php echo $session_id; ?>" />
+                                                            <input type="hidden" name="batch_id" value="<?php echo $batch_id; ?>" />
+                                                            <input type="hidden" name="section" value="<?php echo $section; ?>" />
                                                         </div>
                                                     </div>
                                                   </div> 

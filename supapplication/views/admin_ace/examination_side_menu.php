@@ -174,7 +174,7 @@
             <?php } ?>
                 
                  
-<!--                <li <?php  if($methd == 'add_datesheet_venue_form' || $methd == 'print_rollno_slips_form') echo  'class="active open" ' ;?>>
+                <li <?php  if($methd == 'add_datesheet_venue_form' || $methd == 'print_rollno_slips_form' || $methd == 'view_all_venues') echo  'class="active open" ' ;?>>
                     <a href="#" class="dropdown-toggle">
                         <i class="icon-double-angle-right"></i>
                         Date Sheet Module
@@ -189,6 +189,13 @@
                             </a>
                         </li>                       
                         
+                        <li <?php echo $methd == 'view_all_venues' ? 'class="active" ' : ''; ?>>
+                            <a href="<?php echo base_url()?>examination/view_all_venues">
+                                <i class="icon-leaf"></i>
+                                View All Venues
+                            </a>
+                        </li>                       
+                        
                         <li <?php echo $methd == 'print_rollno_slips_form' ? 'class="active" ' : ''; ?>>
                             <a href="<?php echo base_url()?>examination/print_rollno_slips_form">
                                 <i class="icon-leaf"></i>
@@ -196,7 +203,7 @@
                             </a>
                         </li>                       
                     </ul>
-                </li>-->
+                </li>
                            
             </ul>
         </li> 

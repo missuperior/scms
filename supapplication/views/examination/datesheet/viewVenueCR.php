@@ -48,9 +48,9 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Campaign </th>
                                                 <th>Program</th>
-                                                <th>Semester</th>
+                                                <th>Session </th>
+                                                <th>Section </th>                                                
                                                 <th>Examination Venue</th>
                                                 <!--<th style="width: 26px;">Action</th>-->
                                             </tr>
@@ -63,9 +63,9 @@
                                             <tr>
                                                                                         
                                                 <td><?php echo $i+1;  ?></td>
-                                                <td><?php echo $row['campaign_name']; ?></td>
                                                 <td><?php echo $row['program_name']; ?></td>
-                                                <td><?php echo $row['semester']; ?></td>
+                                                <td><?php echo $row['session']; ?></td>
+                                                <td><?php echo $row['section']; ?></td>                                                
                                                 <td><?php echo $row['venue']; ?></td>
                                                 
 <!--                                                <td class="td-actions">
