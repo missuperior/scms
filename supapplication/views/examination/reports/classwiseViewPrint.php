@@ -138,9 +138,9 @@
   <tr>
     <!--<td height="32" align="center" valign="middle"><?php echo $c+1; ?></td>-->
     
-    <td align="center" valign="top"><?php echo $students[$c]['roll_no']; ?></td>
+    <td align="center" valign="top" style="font-size: 11px"><?php echo $students[$c]['roll_no']; ?></td>
     
-    <td align="left" valign="top" style="padding-left:10px"><?php echo $students[$c]['student_name']; ?></td>
+    <td align="left" valign="top" style="padding-left:10px; font-size: 11px;"><?php echo $students[$c]['student_name']; ?></td>
     
     <?php 
               $totall_obtained = 0;
@@ -155,7 +155,7 @@
                         $count++;
     ?>   
     
-    <td align="center" valign="top" style="font-size: 10px">
+    <td align="center" valign="top" style="font-size: 11px">
         <?php 
             if($exam_type == 'Mid'){ 
                 $totall_obtained = $totall_obtained + $students[$i]['obtained'];                                                            
@@ -189,13 +189,13 @@
     
     ?>
         
-    <td align="center" valign="top" style="font-size: 10px"><?php if($marks > 0){echo 'Fail';}else{echo number_format("$gpaa",2); }?></td>
+    <td align="center" valign="top" style="font-size: 11px"><?php if($marks > 0){echo 'Fail';}else{echo number_format("$gpaa",2); }?></td>
     
-    <td align="center" valign="top" style="font-size: 10px"><?php echo $totall_obtained;?></td>
+    <td align="center" valign="top" style="font-size: 11px"><?php echo $totall_obtained;?></td>
     
-    <td align="center" valign="top" style="font-size: 10px"><?php echo $totall;?></td>
+    <td align="center" valign="top" style="font-size: 11px"><?php echo $totall;?></td>
     
-    <td align="center" valign="top" style="font-size: 10px"><?php if($fail_subjects > 0){echo 'Fail';}else{echo number_format("$cgpa",2);}?></td>
+    <td align="center" valign="top" style="font-size: 11px"><?php if($fail_subjects > 0){echo 'Fail';}else{echo number_format("$cgpa",2);}?></td>
     
   </tr>
 </tbody>

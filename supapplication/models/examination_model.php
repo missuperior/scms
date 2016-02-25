@@ -2097,7 +2097,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
    }
 
    function getRollNoSlipsInfoCR($program_id, $section, $batch_id, $session_id){
-       $query       =   $this->db->query("SELECT dv.venue,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
+       $query       =   $this->db->query("SELECT students.student_id,dv.venue,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
                                             FROM 
                                             datesheet_venues AS dv
                                             INNER JOIN student_sections ON student_sections.`program_id` = dv.`program_id`
@@ -2121,6 +2121,23 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                                             ORDER BY students.roll_no ASC");
        
       // echo $this->db->last_query();die;
+       return   $query->result_array();
+   }
+   
+   
+   function getStudentCourses($student_id,$batch_id,$program_id,$session_id){
+       
+       $query       =   $this->db->query("SELECT courses.`course_name`,courses.`course_id` FROM `student_course_sections` AS scs
+                                            INNER JOIN courses ON courses.`course_id` = scs.`course_id`
+                                            WHERE
+                                            scs.program_id 		= 	$program_id AND
+                                            scs.batch_id   		= 	$batch_id AND
+                                            scs.current_session_id	=	$session_id AND
+                                            scs.student_id 		=	$student_id AND
+                                            courses.`course_type`       =	'Theory'
+                                            ORDER BY courses.course_id ASC");
+       
+//       echo $this->db->last_query();die;
        return   $query->result_array();
    }
    

@@ -107,16 +107,16 @@ body {
   
   <div class="clr"></div>
   <div style="margin-left:0px;">
-  <table width="900" height="170" border="1" cellpadding="0" cellspacing="0">
+  <table width="900" height="20" border="1" cellpadding="0" cellspacing="0">
         <tr>
-           <td width="350" align="center" valign="center"><strong>SUBJECTS</strong></td>
-           <td width="200" align="center" valign="center"><strong>DAY</strong></td>
+           <td width="350" height="26" align="center" valign="center"><strong>SUBJECTS</strong></td>
+           <td width="200" height="26" align="center" valign="center"><strong>DAY</strong></td>
            <td width="175" height="26" align="center" valign="top"><strong>DATE</strong></td>
            <td width="175" height="26" align="center" valign="top"><strong>Timing</strong></td>
 
         </tr>
         <?php 
-       $courses     =   $this->Course_model->getofferedProgCoursesTheory($batch_id,$program_id,$session_id);
+       $courses     =   $this->Examination_model->getStudentCourses($row['student_id'],$batch_id,$program_id,$session_id);
         foreach($courses AS $row2){?>
           <tr>
               <td align="left" style="padding-left : 20px" valign="center"><?php echo  $row2['course_name'];?></td>

@@ -150,9 +150,9 @@
                         <tbody>
 
                                     <tr>
-                                     <td align="center" valign="top"><?php echo $c+1; ?></td>
-                                     <td align="center" valign="top"><?php echo $students[$c]['roll_no']; ?></td>
-                                     <td align="left" valign="top" style="padding-left:10px"><?php echo $students[$c]['student_name']; ?></td>
+                                     <td align="center" valign="top"  style="font-size: 11px"><?php echo $c+1; ?></td>
+                                     <td align="center" valign="top" style="font-size: 11px"><?php echo $students[$c]['roll_no']; ?></td>
+                                     <td align="left" valign="top" style="padding-left:10px; font-size: 11px"><?php echo $students[$c]['student_name']; ?></td>
 
                                         <?php
                                         $totall_obtained = 0;
@@ -163,7 +163,7 @@
                                         $credit_hours = 0;
                                         
                                          foreach ($offered as $cr){ ?>
-                                                  <td> 
+                                                  <td style="font-size: 12px"> 
                                                 <?php  $labi       =  $this->Examination_model->getLabMarks($students[$c]['student_id'],$batch_id,$cr['course_id'], $session_id);
                                                   $student_marks  =   $this->Examination_model->SingleSubjectMarks_cr_Jal($cr['program_id'],$section,$cr['batch_id'],$cr['session_id'], $students[$c]['student_id'], $cr['course_id']);
                                                   
@@ -210,11 +210,11 @@
                                             echo number_format("$gpaa", 2);
                                         } ?></td>
 
-                                        <td align="center" valign="top" style="font-size: 10px"><?php echo $totall_obtained; ?></td>
+                                        <td align="center" valign="top" style="font-size: 11px"><?php echo $totall_obtained; ?></td>
 
-                                        <td align="center" valign="top" style="font-size: 10px"><?php echo $totall; ?></td>
+                                        <td align="center" valign="top" style="font-size: 11px"><?php echo $totall; ?></td>
 
-                                        <td align="center" valign="top" style="font-size: 10px"><?php if ($fail_subjects > 0) {
+                                        <td align="center" valign="top" style="font-size: 11px"><?php if ($fail_subjects > 0) {
                         echo 'Fail';
                     } else {
                         echo number_format("$cgpa", 2);
