@@ -3814,6 +3814,7 @@ class Examination extends CI_Controller {
         
       $this->login_check();
       
+      
       $venue    =   array(
                             'campaign_id'       =>  $this->input->post('campaign'),
                             'program_id'        =>  $this->input->post('program'),
@@ -3824,23 +3825,70 @@ class Examination extends CI_Controller {
       $venue_id =   $this->Examination_model->AddVenue($venue);
       
       if($venue_id){
-                        foreach($this->input->post('course') AS $course){
-
-                             $courses  =   array(
-                                        'venue_id'          =>  $venue_id,
-                                        'course_id'         =>  $course
-                                    );
-                        $venue_course_id =   $this->Examination_model->AddVenueCourses($courses); 
-                        }
-                        
+//                       // foreach($this->input->post('course') AS $course){
+//
+//                        
                     $this->session->set_userdata('success_msg', 'Venue Added');
-                    redirect('examination/add_datesheet_venue_form');
+                    redirect('examination/view_all_venues');
                         
       }else{                
                     $this->session->set_userdata('success_msg', 'Venue Not Added');
                     redirect('examination/add_datesheet_venue_form');
            }
             
+    }
+    
+    public function addVenueCourses_form(){
+        
+        $this->login_check();                
+        
+        $result['venue_id']       = $this->uri->segment(3);
+        $result['program_id']     = $this->uri->segment(4);
+        
+        $result['courses'] = $this->Examination_model->getProgCourses($this->uri->segment(4));
+        
+        $this->load->view('admin_ace/admin_header');
+        $this->load->view('admin_ace/examination_side_menu');
+        $this->load->view('examination/datesheet/addCourse', $result);
+        $this->load->view('admin_ace/admin_footer');
+        
+    }
+ 
+    
+    public function addVenueCourses(){
+        
+        $this->login_check();
+        
+        $venue_id       = $this->uri->segment(3);
+        
+        $string         = $this->input->post('date');
+        $date           = DateTime::createFromFormat("Y-m-d", $string);
+        $day            =   $date->format("D");
+
+        $courses        =   array(
+                                    'venue_id'          =>  $this->input->post('venue_id'),
+                                    'course_id'         =>  $this->input->post('course'),
+                                    'date'              =>  $this->input->post('date'),
+                                    'time'              =>  $this->input->post('time'),
+                                    'day'               =>  $day
+                                );
+        
+        $check          =   $this->Examination_model->CheckVenueCourse(array('venue_id'=>$venue_id,'course_id'=>$this->input->post('course')));
+        if($check){
+                        $this->session->set_userdata('success_msg', 'Course Already Exists, Please try another.');
+                        redirect('examination/view_all_venues');
+        }else{
+                $venue_course_id =   $this->Examination_model->AddVenueCourses($courses); 
+                          
+            if($venue_course_id){
+                    $this->session->set_userdata('success_msg', 'Course Added');
+                    redirect('examination/view_all_venues');
+            }else{
+                    $this->session->set_userdata('success_msg', 'Course Not Added');
+                    redirect('examination/view_all_venues');
+            }
+        
+        }
     }
  
     
@@ -3908,7 +3956,7 @@ class Examination extends CI_Controller {
                                                                             'session_id'        =>  $this->uri->segment(6)
                                                                         )
         );
-
+       
         if(count($check_venue) > 0 ){
             
                 $result['venues']   =   $this->Examination_model->getAllVenuesCR($result['section'],$result['program_id'],$result['session_id'],$result['batch_id']);        
@@ -3930,9 +3978,19 @@ class Examination extends CI_Controller {
     
      public function add_datesheet_venue_cr(){
         
-      $this->login_check();
+      $this->login_check();      
       
-      $venue    =   array(
+      $result['venues']   =   $this->Examination_model->getAllVenuesCR($this->input->post('section'),$this->input->post('program_id'),$this->input->post('session_id'),$this->input->post('batch_id'));                            
+      
+      if(count($result['venues']) > 0){                                      
+
+                    $this->load->view('admin_ace/admin_header');
+                    $this->load->view('admin_ace/examination_side_menu');
+                    $this->load->view('examination/datesheet/viewVenueCR', $result);
+                    $this->load->view('admin_ace/admin_footer');     
+      }else{               
+          
+                $venue    =   array(
                             'session_id'        =>  $this->input->post('session_id'),
                             'program_id'        =>  $this->input->post('program_id'),
                             'section'           =>  $this->input->post('section'),
@@ -3940,18 +3998,21 @@ class Examination extends CI_Controller {
                             'venue'             =>  $this->input->post('venue')
                         );
       
-      $check_venue      =   $this->Examination_model->checkVenue($venue);
-      
-      
-      
-      $venue_id         =   $this->Examination_model->AddVenueCR($venue);
-      
-      if($venue_id){
-                    $this->session->set_userdata('success_msg', 'Venue Added');
-                    redirect('examination/add_datesheet_venue_form_cr');                        
-      }else{                
+                $venue_id         =   $this->Examination_model->AddVenueCR($venue);
+                
+                if($venue_id){
+                    $result['venues']   =   $this->Examination_model->getAllVenuesCR($this->input->post('section'),$this->input->post('program_id'),$this->input->post('session_id'),$this->input->post('batch_id'));                            
+                    $this->load->view('admin_ace/admin_header');
+                    $this->load->view('admin_ace/examination_side_menu');
+                    $this->load->view('examination/datesheet/viewVenueCR', $result);
+                    $this->load->view('admin_ace/admin_footer');     
+
+                    
+                }else{
+          
                     $this->session->set_userdata('success_msg', 'Venue Not Added');
                     redirect('examination/add_datesheet_venue_form_cr');
+                }
            }
             
     }
@@ -3966,7 +4027,7 @@ class Examination extends CI_Controller {
         
         
         $result['info'] = $this->Examination_model->getRollNoSlipsInfoCR($result['program_id'], $result['section'], $result['batch_id'], $result['session_id']);
-       // echo '<pre>';print_r($result['info']);die;
+//        echo '<pre>';print_r($result['info']);die;
         
         if (count($result['info']) > 0) {
             $this->load->view('examination/datesheet/datesheetCR', $result);
@@ -3978,10 +4039,75 @@ class Examination extends CI_Controller {
     
     
     
+    public function addVenueCourses_form_cr(){
+        
+        $this->login_check();                
+        
+        $result['venue_id']         = $this->uri->segment(3);
+        $program_id       = $this->uri->segment(4);
+        $batch_id         = $this->uri->segment(5);
+        $section          = $this->uri->segment(6);
+        $session_id       = $this->uri->segment(7);
+        
+        $result['courses'] = $this->Course_model->getofferedProgCoursesTheory($batch_id, $program_id, $session_id);
+        
+        $session_array      =   array('program_id'=>$program_id,'batch_id'=>$batch_id,'section'=>$section,'session_id'=>$session_id);
+        
+        $this->session->set_userdata($session_array);
+        
+//        print_r($result);die;
+        
+        $this->load->view('admin_ace/admin_header');
+        $this->load->view('admin_ace/examination_side_menu');
+        $this->load->view('examination/datesheet/addCourseCR', $result);
+        $this->load->view('admin_ace/admin_footer');
+        
+    }
     
+     public function addVenueCourses_cr(){
+        
+        $this->login_check();
+        
+        $venue_id       = $this->input->post('venue_id');
+        
+        $string         = $this->input->post('date');
+        $date           = DateTime::createFromFormat("Y-m-d", $string);
+        $day            =   $date->format("D");
+
+        $courses        =   array(
+                                    'venue_id'          =>  $this->input->post('venue_id'),
+                                    'course_id'         =>  $this->input->post('course'),
+                                    'date'              =>  $this->input->post('date'),
+                                    'time'              =>  $this->input->post('time'),
+                                    'day'               =>  $day
+                                );
+        
+        $check          =   $this->Examination_model->CheckVenueCourse(array('venue_id'=>$venue_id,'course_id'=>$this->input->post('course')));
+        if($check){
+                        $this->session->set_userdata('success_msg', 'Course Already Exists, Please try another.');
+                        redirect("examination/addVenueCourses_form_cr/".$venue_id."/".$this->session->userdata('program_id')."/".$this->session->userdata('batch_id')."/".$this->session->userdata('section')."/".$this->session->userdata('session_id'));
+        }else{
+                 
+                $venue_course_id =   $this->Examination_model->AddVenueCourses($courses); 
+
+                if($venue_course_id){
+                        $this->session->set_userdata('success_msg', 'Course Added');
+                        redirect("examination/addVenueCourses_form_cr/".$venue_id."/".$this->session->userdata('program_id')."/".$this->session->userdata('batch_id')."/".$this->session->userdata('section')."/".$this->session->userdata('session_id'));
+
+                }else{
+                        $this->session->set_userdata('success_msg', 'Course Not Added');
+                        redirect("examination/addVenueCourses_form_cr/".$venue_id."/".$this->session->userdata('program_id')."/".$this->session->userdata('batch_id')."/".$this->session->userdata('section')."/".$this->session->userdata('session_id'));
+                }
+                
+        }
+        
+        
+    }
+ 
+   
  
     
-
+    
     
     
 }

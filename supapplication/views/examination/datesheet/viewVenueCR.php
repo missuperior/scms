@@ -52,7 +52,7 @@
                                                 <th>Session </th>
                                                 <th>Section </th>                                                
                                                 <th>Examination Venue</th>
-                                                <!--<th style="width: 26px;">Action</th>-->
+                                                <th style="width: 26px;">Action</th>
                                             </tr>
                                         </thead>
 
@@ -68,13 +68,13 @@
                                                 <td><?php echo $row['section']; ?></td>                                                
                                                 <td><?php echo $row['venue']; ?></td>
                                                 
-<!--                                                <td class="td-actions">
+                                                <td class="td-actions">
                                                     <div class="hidden-phone visible-desktop action-buttons">                                                                                                               
-                                                        <a class="green" href="<?php echo base_url();?>examination/edit_venue/<?php echo $row['course_id']; ?>">
-                                                            <i class="icon-pencil bigger-130"></i>
+                                                        <a class="green" href="<?php echo base_url();?>examination/addVenueCourses_form_cr/<?php echo $row['venue_id']; ?>/<?php echo $row['program_id']; ?>/<?php echo $row['batch_id']; ?>/<?php echo $row['section']; ?>/<?php echo $row['session_id']; ?>">
+                                                            Add Course
                                                         </a>                                                       
                                                     </div>                                                   
-                                                </td>                                                 -->
+                                                </td>                                                 
                                             </tr>
                                            <?php $i++; }?>
                                             
@@ -102,7 +102,7 @@
         var oTable1 = $('#sample-table-2').dataTable( {
           "aoColumns": [
             { "bSortable": true },
-            null, null, null,
+            null, null, null,null,
             { "bSortable": false }
           ] } );
 			

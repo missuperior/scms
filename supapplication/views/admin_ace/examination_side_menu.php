@@ -87,8 +87,46 @@
                           
             </ul>
         </li>
-            
-            
+      <?php  }elseif($this->session->userdata('role') == 'VIEW_ACCOUNT'){?>
+        
+            <li <?php  if($methd == 'view_all_venues') echo  'class="active open" ' ;?>>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-double-angle-right"></i>
+                        (Semester) Date Sheet Module 
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                    <ul class="submenu">                        
+                        <li <?php echo $methd == 'print_rollno_slips_form' ? 'class="active" ' : ''; ?>>
+                            <a href="<?php echo base_url()?>examination/print_rollno_slips_form">
+                                <i class="icon-leaf"></i>
+                                Print Roll No Slips
+                            </a>
+                        </li>                       
+                    </ul>
+                </li>
+                
+                
+            <li <?php  if($methd == 'view_all_venues') echo  'class="active open" ' ;?>>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-double-angle-right"></i>
+                        (CR) Date Sheet Module
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                <ul class="submenu">                        
+                        <li <?php if ($methd == 'class_wise_form_cr') echo 'class="active" '; ?> > 
+                            <a href="<?php echo base_url(); ?>examination/class_wise_form_cr" >
+                                Print Roll No Slips
+                                <b class="arrow icon-angle-down"></b>
+                            </a>                                      
+                        </li>                       
+                    </ul>
+                </li>
+                
+               
+
+                
       <?php  }else{?>
         <!-- ***  For Accounts Reports  *** -->
           <li <?php if($controller == 'examination')  echo 'class="active open" '; ?> > 
@@ -285,7 +323,7 @@
              
         
         
-        <?php }?>
+        
          <li <?php if($controller == 'examination' || $controller == 'teachers' )  echo 'class="active open" '; ?> > 
             <a href="#" class="dropdown-toggle">
                 <i class="icon-th-list"></i>
@@ -346,7 +384,7 @@
                 </li>     
             </ul>
          </li>
-        
+        <?php }?>
         
         
     </ul><!--/.nav-list-->

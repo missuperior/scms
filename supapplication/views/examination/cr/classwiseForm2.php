@@ -57,7 +57,13 @@
                                                     <td><?php echo $info[$i]['course_section']; ?></td>
                                                     <td>
                                                    
-                                                        <a target="_blank"  href="<?php echo base_url();?>examination/view_mid_result_summary_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
+                                                    <?php if($this->session->userdata('role') == 'VIEW_ACCOUNT') {?>                                                           
+                                                        <a  target="_blank" href="<?php echo base_url();?>examination/print_rollno_slips_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
+                                                             Print Roll No Slips
+                                                        </a>                                                        
+                                                    <?php }else{?>
+                                                        
+                                                         <a target="_blank"  href="<?php echo base_url();?>examination/view_mid_result_summary_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
                                                             Mid Summary                                                                   
                                                         </a> 
                                                          <a  target="_blank" href="<?php echo base_url();?>examination/view_final_result_summary_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
@@ -72,6 +78,8 @@
                                                         <a  target="_blank" href="<?php echo base_url();?>examination/print_rollno_slips_cr/<?php echo $info[$i]['program_id'];?>/<?php echo $info[$i]['course_section'];?>/<?php echo $info[$i]['batch_id'];?>/<?php echo $info[$i]['current_session_id'];?>">
                                                             / Print Roll No Slips
                                                         </a>
+                                                        
+                                                    <?php }?>
                                                         
                                                     </td>                                                            
                                                </tr>                                            

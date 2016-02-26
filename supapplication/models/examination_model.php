@@ -2017,6 +2017,11 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
         return $this->db->insert_id();
    }
    
+   function CheckVenueCourse($data){
+       $query = $this->db->get_where('datesheet_venue_courses', $data);
+        return   $query->result_array();
+   }
+   
    function AddVenueCourses($courses){
        $query = $this->db->insert('datesheet_venue_courses', $courses); 
         return $this->db->insert_id();
@@ -2024,7 +2029,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
 
    
    function getAllVenues(){
-       $query       =   $this->db->query("select dv.venue,dv.semester,programs.program_name,campaign.campaign_name from datesheet_venues AS dv
+       $query       =   $this->db->query("select dv.venue_id,dv.program_id,dv.venue,dv.semester,programs.program_name,campaign.campaign_name from datesheet_venues AS dv
                                           INNER JOIN programs ON programs.program_id = dv.program_id
                                           INNER JOIN campaign ON campaign.campaign_id = dv.campaign_id
 
@@ -2034,7 +2039,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
    
    
    function getAllVenuesCR($section,$program_id,$session_id,$batch_id){
-       $query       =   $this->db->query("SELECT dv.venue,dv.`section`,programs.program_name,sessions.session FROM datesheet_venues AS dv 
+       $query       =   $this->db->query("SELECT dv.*,programs.program_name,sessions.session FROM datesheet_venues AS dv 
                                             INNER JOIN programs ON programs.program_id = dv.program_id 
                                             INNER JOIN sessions ON sessions.session_id = dv.session_id  
                                             WHERE
@@ -2070,7 +2075,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
    
    
    function getDatesheetCourses($venue_id){
-             $query       =   $this->db->query("SELECT coursess.`course_name` FROM coursess
+             $query       =   $this->db->query("SELECT coursess.`course_name`,dvc.* FROM coursess
                                                     INNER JOIN datesheet_venue_courses AS dvc ON dvc.course_id = coursess.`course_id`
                                                     WHERE
                                                     dvc.venue_id = $venue_id
@@ -2093,11 +2098,12 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
    
    function AddVenueCR($venue){
        $query = $this->db->insert('datesheet_venues', $venue); 
+       //echo $this->db->last_query();die;
         return $this->db->insert_id();
    }
 
    function getRollNoSlipsInfoCR($program_id, $section, $batch_id, $session_id){
-       $query       =   $this->db->query("SELECT students.student_id,dv.venue,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
+       $query       =   $this->db->query("SELECT students.student_id,dv.venue,dv.venue_id,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
                                             FROM 
                                             datesheet_venues AS dv
                                             INNER JOIN student_sections ON student_sections.`program_id` = dv.`program_id`
@@ -2125,11 +2131,13 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
    }
    
    
-   function getStudentCourses($student_id,$batch_id,$program_id,$session_id){
+   function getStudentCourses($venue_id,$student_id,$batch_id,$program_id,$session_id){
        
-       $query       =   $this->db->query("SELECT courses.`course_name`,courses.`course_id` FROM `student_course_sections` AS scs
+       $query       =   $this->db->query("SELECT dvc.day,dvc.date,dvc.time,courses.`course_name`,courses.`course_id` FROM `student_course_sections` AS scs
                                             INNER JOIN courses ON courses.`course_id` = scs.`course_id`
+                                            INNER JOIN datesheet_venue_courses AS dvc ON dvc.`course_id` = courses.`course_id`
                                             WHERE
+                                            dvc.venue_id 		= 	$venue_id AND
                                             scs.program_id 		= 	$program_id AND
                                             scs.batch_id   		= 	$batch_id AND
                                             scs.current_session_id	=	$session_id AND
@@ -2141,7 +2149,10 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
        return   $query->result_array();
    }
    
-
+   function getProgCourses($program_id){
+       $query   =   $this->db->query("SELECT * FROM coursess WHERE program_id = $program_id ORDER BY course_id ASC");
+       return       $query->result_array();
+   }
 
    // **** End Addded By Tariq For Examination ****  \\
 }

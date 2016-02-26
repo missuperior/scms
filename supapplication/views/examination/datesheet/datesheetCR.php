@@ -116,13 +116,13 @@ body {
 
         </tr>
         <?php 
-       $courses     =   $this->Examination_model->getStudentCourses($row['student_id'],$batch_id,$program_id,$session_id);
+       $courses     =   $this->Examination_model->getStudentCourses($row['venue_id'],$row['student_id'],$batch_id,$program_id,$session_id);
         foreach($courses AS $row2){?>
           <tr>
               <td align="left" style="padding-left : 20px" valign="center"><?php echo  $row2['course_name'];?></td>
-              <td align="left" style="padding-left : 20px" valign="center">&nbsp;</td>
-              <td align="left" style="padding-left : 20px" valign="center">&nbsp;</td>
-              <td align="left" style="padding-left : 20px" valign="center">&nbsp;</td>              
+              <td align="left" style="padding-left : 20px" valign="center"><?php echo $row2['day']; ?></td>
+              <td align="left" style="padding-left : 20px" valign="center"><?php echo  (date("d-M-Y",strtotime($row2['date'])));?></td>
+              <td align="left" style="padding-left : 20px" valign="center"><?php echo  $row2['time'];?></td>              
           </tr>
         <?php }?>
   
