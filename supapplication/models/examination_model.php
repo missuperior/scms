@@ -1632,10 +1632,6 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
         return $this->db->affected_rows();    
     }
     
-    function addLog($log_array){
-        $query = $this->db->insert('edit_del_result_log', $log_array); 
-        return $this->db->insert_id();
-    }
     
     function UpdateFinalRes($final_result,$student_id,$final_result_id){
          $this->db->where('final_result_id', $final_result_id);
@@ -2054,7 +2050,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
    
    
    function getRollNoSlipsInfo($campaign_id, $program_id, $semester){
-       $query       =   $this->db->query("SELECT forms.`student_name`,forms.`father_name`,students.`roll_no`,programs.`program_name`,dv.venue,dv.venue_id,dv.semester,students.`status` 
+       $query       =   $this->db->query("SELECT students.student_id,forms.`student_name`,forms.`father_name`,students.`roll_no`,programs.`program_name`,dv.venue,dv.venue_id,dv.semester,students.`status` 
                                             FROM forms
 
                                             INNER JOIN students ON students.`form_id` = forms.`form_id`
@@ -2080,7 +2076,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                                                     WHERE
                                                     dvc.venue_id = $venue_id
 
-                                                    ORDER BY coursess.course_id ASC");
+                                                    ORDER BY dvc.date ASC");
        
        return   $query->result_array();
    }
@@ -2101,7 +2097,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
        //echo $this->db->last_query();die;
         return $this->db->insert_id();
    }
-
+   
    function getRollNoSlipsInfoCR($program_id, $section, $batch_id, $session_id){
        $query       =   $this->db->query("SELECT students.student_id,dv.venue,dv.venue_id,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
                                             FROM 
@@ -2143,7 +2139,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                                             scs.current_session_id	=	$session_id AND
                                             scs.student_id 		=	$student_id AND
                                             courses.`course_type`       =	'Theory'
-                                            ORDER BY courses.course_id ASC");
+                                            ORDER BY dvc.date ASC");
        
 //       echo $this->db->last_query();die;
        return   $query->result_array();
@@ -2154,5 +2150,15 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
        return       $query->result_array();
    }
 
+   
+   
+   function addLog($data){
+       $query = $this->db->insert('datesheet_logs', $data); 
+//       echo $this->db->last_query();die;
+        return $this->db->insert_id();
+   }
+
+   
+   
    // **** End Addded By Tariq For Examination ****  \\
 }

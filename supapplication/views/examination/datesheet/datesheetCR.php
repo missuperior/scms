@@ -116,6 +116,9 @@ body {
 
         </tr>
         <?php 
+        if($this->session->userdata('role') == 'VIEW_ACCOUNT'){
+                $log         =   $this->Examination_model->addLog(array('student_id'=>$row['student_id']));
+        }
        $courses     =   $this->Examination_model->getStudentCourses($row['venue_id'],$row['student_id'],$batch_id,$program_id,$session_id);
         foreach($courses AS $row2){?>
           <tr>
@@ -168,13 +171,15 @@ body {
 <!--footer ends here--> 
 <!--</div>-->
 
-<?php  } ?>
+<?php  }
+if($this->session->userdata('role') == 'VIEW_ACCOUNT'){
+?>
 
 <script type="text/javascript">
         self.focus()
         self.print()
 //        self.close()
 </script>
-
+<?php } ?>
 </body>
 </html>

@@ -3928,7 +3928,7 @@ class Examination extends CI_Controller {
         
         
         $result['info'] = $this->Examination_model->getRollNoSlipsInfo($campaign_id, $program_id, $semester);
-       // echo '<pre>';print_r($result['info']);die;
+//        echo '<pre>';print_r($result['info']);die;
         
         if (count($result['info']) > 0) {
             $this->load->view('examination/datesheet/datesheet', $result);

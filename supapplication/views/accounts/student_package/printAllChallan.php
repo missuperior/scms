@@ -90,15 +90,25 @@
                             $session     =   'Semester 3';
                         }elseif($j['campaign_id'] == 1 && $j['session'] == 'Spring 2016'){
                             $session     =   'Semester 4';
+                        }elseif($j['campaign_id'] == 1 && $j['session'] == 'Fall 2016'){
+                            $session     =   'Semester 5';
                         }
                         
                         elseif($j['campaign_id'] == 2 && $j['session'] == 'Fall 2015'){
                             $session     =   'Semester 2';
                         }elseif($j['campaign_id'] == 2 && $j['session'] == 'Spring 2016'){
                             $session     =   'Semester 3';
+                        }elseif($j['campaign_id'] == 2 && $j['session'] == 'Fall 2016'){
+                            $session     =   'Semester 4';
                         }
                         
                         elseif($j['campaign_id'] == 3 && $j['session'] == 'Spring 2016'){
+                            $session     =   'Semester 2';
+                        }elseif($j['campaign_id'] == 3 && $j['session'] == 'Fall 2016'){
+                            $session     =   'Semester 3';
+                        }
+                        
+                        elseif($j['campaign_id'] == 5 && $j['session'] == 'Fall 2016'){
                             $session     =   'Semester 2';
                         }
                         

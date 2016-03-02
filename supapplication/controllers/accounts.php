@@ -1398,15 +1398,25 @@ class Accounts extends CI_Controller {
                $session     =   'Semester 3';
            }elseif($result['std_package'][0]['campaign_id'] == 1 && $result['challan_info'][0]['session'] == 'Spring 2016'){
                $session     =   'Semester 4';
+           }elseif($result['std_package'][0]['campaign_id'] == 1 && $result['challan_info'][0]['session'] == 'Fall 2016'){
+               $session     =   'Semester 5';
            }
            
            elseif($result['std_package'][0]['campaign_id'] == 2 && $result['challan_info'][0]['session'] == 'Fall 2015'){
                $session     =   'Semester 2';
            }elseif($result['std_package'][0]['campaign_id'] == 2 && $result['challan_info'][0]['session'] == 'Spring 2016'){
                $session     =   'Semester 3';
+           }elseif($result['std_package'][0]['campaign_id'] == 2 && $result['challan_info'][0]['session'] == 'Fall 2016'){
+               $session     =   'Semester 4';
            }
            
            elseif($result['std_package'][0]['campaign_id'] == 3 && $result['challan_info'][0]['session'] == 'Spring 2016'){
+               $session     =   'Semester 2';
+           }elseif($result['std_package'][0]['campaign_id'] == 3 && $result['challan_info'][0]['session'] == 'Fall 2016'){
+               $session     =   'Semester 3';
+           }
+           
+           elseif($result['std_package'][0]['campaign_id'] == 5 && $result['challan_info'][0]['session'] == 'Fall 2016'){
                $session     =   'Semester 2';
            }
            
@@ -1464,15 +1474,25 @@ class Accounts extends CI_Controller {
                $session     =   'Semester 3';           
            }elseif($result['std_package'][0]['campaign_id'] == 1 && $result['challan_info'][0]['session'] == 'Spring 2016'){
                $session     =   'Semester 4';
+           }elseif($result['std_package'][0]['campaign_id'] == 1 && $result['challan_info'][0]['session'] == 'Fall 2016'){
+               $session     =   'Semester 5';
            }
            
            elseif($result['std_package'][0]['campaign_id'] == 2 && $result['challan_info'][0]['session'] == 'Fall 2015'){
                $session     =   'Semester 2';
            }elseif($result['std_package'][0]['campaign_id'] == 2 && $result['challan_info'][0]['session'] == 'Spring 2016'){
                $session     =   'Semester 3';
+           }elseif($result['std_package'][0]['campaign_id'] == 2 && $result['challan_info'][0]['session'] == 'Fall 2016'){
+               $session     =   'Semester 4';
            }
            
            elseif($result['std_package'][0]['campaign_id'] == 3 && $result['challan_info'][0]['session'] == 'Spring 2016'){
+               $session     =   'Semester 2';
+           }elseif($result['std_package'][0]['campaign_id'] == 3 && $result['challan_info'][0]['session'] == 'Fall 2016'){
+               $session     =   'Semester 3';
+           }
+           
+           elseif($result['std_package'][0]['campaign_id'] == 5 && $result['challan_info'][0]['session'] == 'Fall 2016'){
                $session     =   'Semester 2';
            }
            

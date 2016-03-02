@@ -3,16 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/examination/datesheet/datesheet.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/examination/datesheet/addCourseCR.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/examination/datesheet/addCourse.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/models/examination_model.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/controllers/examination.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/examination/datesheet/datesheetCR.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/examination/datesheet/viewVenue.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/examination/datesheet/viewVenueCR.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/models/course_model.php</file>
-            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/examination/datesheet/addVenue.php</file>
+            <file>file:/D:/development/htdocs/mysuperior/supapplication/views/admin/program_fee/add_program_fee.php</file>
         </group>
     </open-files>
 </project-private>
