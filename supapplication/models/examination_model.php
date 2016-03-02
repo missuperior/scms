@@ -737,14 +737,14 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
     function classWiseMidReport($campaign_id,$program_id,$semester){
        
         $query      =   $this->db->query("SELECT students.`student_id`,students.roll_no,forms.student_name,mid_result.`program_id`,mid_result.`course_id`,SUM(mid_result.`mid_value_1`+mid_result.`mid_value_2`+mid_result.`mid_value_3`) AS obtained ,mid_result.semester,
-                                        courses.`course_name`,courses.credit_hours,programs.`program_name`,campaign.`campaign_name`,campus.`campus_name`,batch.*
+                                        coursess.`course_name`,coursess.credit_hours,programs.`program_name`,campaign.`campaign_name`,campus.`campus_name`,batch.*
                                         FROM students
                                         
                                         INNER JOIN forms ON forms.form_id =students.form_id
                                         INNER JOIN mid_result ON mid_result.`student_id` = students.`student_id`
                                         INNER JOIN campus ON campus.campus_id = forms.campus_id
                                         INNER JOIN campaign ON campaign.campaign_id = forms.campaign_id
-                                        INNER JOIN courses ON courses.course_id = mid_result.course_id
+                                        INNER JOIN coursess ON coursess.course_id = mid_result.course_id
                                         INNER JOIN programs ON programs.program_id = forms.program_id
                                         INNER JOIN batch ON batch.batch_id = students.batch_id
 
@@ -755,8 +755,8 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                                         mid_result.`semester` = $semester   AND
                                         students.status = 'ok'
                                         GROUP BY mid_result.`student_id`,mid_result.`course_id`
-                                        ORDER BY students.roll_no ASC,  courses.course_id ASC");
-//        echo $this->db->last_query();die;
+                                        ORDER BY students.roll_no ASC,  coursess.course_id ASC");
+//          echo $this->db->last_query();die;
         return $query->result_array();
         
     }
