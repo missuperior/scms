@@ -2098,34 +2098,67 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
         return $this->db->insert_id();
    }
    
-   function getRollNoSlipsInfoCR($program_id, $section, $batch_id, $session_id){
-       $query       =   $this->db->query("SELECT students.student_id,dv.venue,dv.venue_id,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
+//   function getRollNoSlipsInfoCR($program_id, $section, $batch_id, $session_id){
+//       $query       =   $this->db->query("SELECT students.student_id,dv.venue,dv.venue_id,student_sections.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
+//                                            FROM 
+//                                            datesheet_venues AS dv
+//                                            INNER JOIN student_sections ON student_sections.`program_id` = dv.`program_id`
+//                                            INNER JOIN forms ON forms.`program_id` = dv.`program_id`
+//                                            INNER JOIN students ON students.`form_id` = forms.`form_id`
+//                                            INNER JOIN sessions ON sessions.`session_id` = dv.`session_id`
+//                                            INNER JOIN programs ON programs.`program_id` = dv.`program_id`
+//                                            WHERE
+//                                            dv.`section` = student_sections.`program_section`
+//                                            AND
+//                                            dv.`batch_id` = student_sections.`batch_id`
+//                                            AND
+//                                            student_sections.`student_id` = students.`student_id`
+//                                            AND
+//                                            students.`status` = 'ok'
+//                                            AND
+//                                            dv.`program_id` = $program_id AND
+//                                            dv.`section` = '$section'   AND
+//                                            dv.`session_id` = $session_id AND
+//                                            dv.`batch_id`   = $batch_id                                             
+//                                            ORDER BY students.roll_no ASC");
+//       
+//      // echo $this->db->last_query();die;
+//       return   $query->result_array();
+//   }
+//   
+   
+   
+     function getRollNoSlipsInfoCR($program_id, $section, $batch_id, $session_id){
+       $query       =   $this->db->query("SELECT students.student_id,dv.venue,dv.venue_id,students.`roll_no`,forms.`student_name`, forms.`father_name`,sessions.`session`,programs.program_name
                                             FROM 
                                             datesheet_venues AS dv
-                                            INNER JOIN student_sections ON student_sections.`program_id` = dv.`program_id`
+                                            INNER JOIN student_course_sections ON student_course_sections.`program_id` = dv.`program_id`
                                             INNER JOIN forms ON forms.`program_id` = dv.`program_id`
                                             INNER JOIN students ON students.`form_id` = forms.`form_id`
                                             INNER JOIN sessions ON sessions.`session_id` = dv.`session_id`
                                             INNER JOIN programs ON programs.`program_id` = dv.`program_id`
                                             WHERE
-                                            dv.`section` = student_sections.`program_section`
+                                            dv.`section` = student_course_sections.`course_section`
                                             AND
-                                            dv.`batch_id` = student_sections.`batch_id`
+                                            dv.`batch_id` = student_course_sections.`batch_id`
                                             AND
-                                            student_sections.`student_id` = students.`student_id`
+                                            student_course_sections.`student_id` = students.`student_id`
                                             AND
+                                            student_course_sections.`current_session_id` = dv.`session_id` 
+                                            AND 
                                             students.`status` = 'ok'
                                             AND
                                             dv.`program_id` = $program_id AND
                                             dv.`section` = '$section'   AND
                                             dv.`session_id` = $session_id AND
-                                            dv.`batch_id`   = $batch_id                                             
+                                            dv.`batch_id`   = $batch_id      
+                                            GROUP BY
+                                            students.`student_id`
                                             ORDER BY students.roll_no ASC");
        
-      // echo $this->db->last_query();die;
+//       echo $this->db->last_query();die;
        return   $query->result_array();
    }
-   
    
    function getStudentCourses($venue_id,$student_id,$batch_id,$program_id,$session_id){
        
