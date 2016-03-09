@@ -127,7 +127,7 @@ $('#fifth_image').width(75);
                                                 
                                             </div>
                                             
-						<div id="middlearea" style="float:left !important">
+						<div id="middlearea" >
                                                   <a href="<?php echo base_url()?>"><img src="<?php echo base_url(); ?>/assets/images/center_logo.png" title="logo" class="center_logo" /></a>
                                                   <a href="<?php echo base_url()?>admission_r"><img src="<?php echo base_url(); ?>/assets/images/first_image.png" title="" id="first_image" /></a>
                                                   <a href="<?php echo base_url()?>audit"><img src="<?php echo base_url(); ?>/assets/images/second_image.png" id="second_image" /></a>
