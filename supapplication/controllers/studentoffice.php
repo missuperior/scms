@@ -7,6 +7,7 @@ class Studentoffice extends CI_Controller {
 
     
     $this->load->model('Admin_model');
+    $this->load->model('Manager_model');
     $this->load->model('Admission_r_model');
     $this->load->model('Accounts_model');
     $this->load->model('Examination_model');
@@ -780,6 +781,31 @@ class Studentoffice extends CI_Controller {
                             $this->load->view('admin_ace/admin_footer');
                         }
                     }  
+                    
+                    
+                    
+  // view all the sections
+        public function view_student_sections_teachers_form(){
+            
+            //$this->login_check();
+            $this->load->view('admin_ace/admin_header');
+            $this->load->view('admin_ace/studentoffice_side_menu');
+            
+            // qurying the aloocated courses list
+            //$result['programms'] = $this->Admin_model->getAllprograms();
+//            $emp_id                 = $this->session->userdata('employee_id');
+//            $emp_depart_id          = $this->Manager_model->getEmployeeDept( $emp_id );
+            $emp_department_id      = 4;
+            
+            //getting all programs of
+            $result['programms']    = $this->Admin_model->getAllprogramsHR($emp_department_id);
+            //echo '<pre>';print_r($result);die;
+            $result['all_session']  = $this->Admin_model->getAllSessions();
+            $result['all_batches']  = $this->Admin_model->getAllbatches();
+            
+            $this->load->view('prgmanager/studentsections/view_student_sections_teachers_form_StudentOffice' ,$result);
+            $this->load->view('admin_ace/admin_footer');
+        }                    
 
     
     //  *******************  FOR  STUDENT OFFICE ENDDDDDDDDDDDDDDDDDDD  ***************************** //

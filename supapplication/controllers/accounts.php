@@ -162,7 +162,7 @@ class Accounts extends CI_Controller {
     $result['detailed']                 =   $this->Accounts_model->detailed();
     $result['student']                  =   $this->Accounts_model->student();
     
-    
+
     $this->load->view('admin_ace/admin_header');
     $this->load->view('admin_ace/accounts_side_menu');
     $this->load->view('accounts/dashboard', $result);

@@ -1681,6 +1681,27 @@ class Programmanagers extends MAIN_Controller {
             $test.='</tbody></table>';echo $test;exit;
         }
         
+        public function ajax_section_batch_teachser_StudentOffice(){
+            $program_id             = $_POST['program'];
+            $section                = $_POST['section'];
+            $batch_id               = $_POST['batch'];
+            $session                = $_POST['session'];
+            
+            $result                 = $this->Section_model->TeacherBatchSection($batch_id,$program_id, $session , $section);
+            $i                      = 0;
+            
+            $test.='<table id="sample-table-2" class="table table-striped table-bordered table-hover"><tr><td><label  class="checkbox" style="width: 100%;">Sr#</label></td><td>Name</td><td>Course</td><td>Section</td></tr>';
+            foreach( $result as  $pp){ 
+                $course_name            = $pp["course_name"];
+                $course_name            = base64_encode($course_name);
+                //$course_name            = base64_encode($pp["session"].' == '. $pp["session"]);
+                
+                $test.='<tr><td><label  class="checkbox" style="width: 100%;"></label></td><td>'.$pp["employee_name"].'</td><td>'.$pp["course_name"].'</td><td>'.$pp["course_section"].'</td></tr>';
+                $i++; 
+            } 
+            $test.='</tbody></table>';echo $test;exit;
+        }
+        
         // view all the sections
         public function view_student_sections_form(){
             

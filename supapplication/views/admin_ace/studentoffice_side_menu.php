@@ -62,6 +62,26 @@
                          </ul>
         </li> 
         
+         <li <?php if($controller == 'studentoffice' && $methd != 'dashboard')  echo 'class="active open" '; ?> > 
+                        <a href="#" class="dropdown-toggle">
+                            <i class="icon-money"></i>
+                            <span class="menu-text">  Registration </span>
+
+                            <b class="arrow icon-angle-down"></b>
+                        </a>
+
+                        <ul class="submenu">
+
+                           <li <?php if($methd == 'view_student_sections_teachers_form') echo  'class="active" '; ?> > 
+                                        <a href="<?php echo base_url()?>studentoffice/view_student_sections_teachers_form">
+                                            <i class="icon-leaf"></i>
+                                           Offered Courses
+                                        </a>
+                           </li>                                                       
+                            
+                         </ul>
+        </li> 
+        
         
          <li <?php if($controller == 'studentoffice' && $methd != 'dashboard')  echo 'class="active open" '; ?> > 
                         <a href="#" class="dropdown-toggle">

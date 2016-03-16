@@ -2060,6 +2060,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
                                             WHERE 
                                             
                                             forms.`campaign_id` = $campaign_id AND
+                                            dv.`campaign_id` = $campaign_id AND
                                             dv.program_id  = $program_id AND
                                             dv.semester    = $semester AND
                                             students.`roll_no` != '' AND 
