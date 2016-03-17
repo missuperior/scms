@@ -805,7 +805,7 @@ class Programmanagers extends MAIN_Controller {
             $this->load->view('admin_ace/prgmanager_footer');
         }
         
-        
+       
         
         public function view_offered_courses()
         {
@@ -852,7 +852,12 @@ class Programmanagers extends MAIN_Controller {
             $program_id             = $_REQUEST['program'];
             $session_id             = $_REQUEST['session'];
             $result                 = $this->Course_model->getofferedProgCourses($batch_id,$program_id,$session_id);
-            $test .='<table id="sample-table-2" class="table table-striped table-bordered table-hover"><thead><tr><th>#</th><th>Course Name</th><th>Course Code</th><th>Remove</th></tr></thead><tbody>';
+            
+            if($this->session->userdata('sub_login') == 'std_office'){
+                $test .='<table id="sample-table-2" class="table table-striped table-bordered table-hover"><thead><tr><th>#</th><th>Course Name</th><th>Course Code</th></tr></thead><tbody>';
+            }else{
+                $test .='<table id="sample-table-2" class="table table-striped table-bordered table-hover"><thead><tr><th>#</th><th>Course Name</th><th>Course Code</th><th>Remove</th></tr></thead><tbody>';
+            }
             
             $i = 1;
             foreach( $result as  $pp){
@@ -864,8 +869,14 @@ class Programmanagers extends MAIN_Controller {
                 
                 //$remove         = '<a style="cursor:pointer;" href="javascript:void(0);" onclick="rmcourse('.$course_id.','.$session_id.', '.$program_id.', '.$batch_id.' , '.$i.')" />Remove</a>';
                 $remove         = 'onclick="rmcourse('.$course_id.','.$session_id.', '.$program_id.', '.$batch_id.' , '.$i.')" ';
-                $test.='<tr  id="row'.$i.'"><td><label   style="width: 100%;">'.$i.'</td><td>'.$pp["course_name"].'</td><td>'.$pp["course_code"].'</td><td '.$remove.'>Remove</td></tr>';
-                $i++; 
+                
+                if($this->session->userdata('sub_login') == 'std_office'){
+                                $test.='<tr  id="row'.$i.'"><td><label   style="width: 100%;">'.$i.'</td><td>'.$pp["course_name"].'</td><td>'.$pp["course_code"].'</td></tr>';
+                                $i++; 
+                }else{
+                                $test.='<tr  id="row'.$i.'"><td><label   style="width: 100%;">'.$i.'</td><td>'.$pp["course_name"].'</td><td>'.$pp["course_code"].'</td><td '.$remove.'>Remove</td></tr>';
+                                $i++; 
+                }
             } 
             $test.='</tbody></table>';
             echo $test;exit;

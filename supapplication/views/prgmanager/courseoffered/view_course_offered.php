@@ -49,8 +49,8 @@
                                                 <th>#</th>
                                                 <th>Course Name</th>
                                                 <th>Course Code</th>
-                                                <th>Added Date</th>
-                                                <th style="width: 26px;">Action</th>
+                                                <th>Added Date</th>                                               
+                                                <th style="width: 26px;">Action</th>                                                
                                             </tr>
                                         </thead>
 

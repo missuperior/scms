@@ -72,8 +72,15 @@
 
                         <ul class="submenu">
 
-                           <li <?php if($methd == 'view_student_sections_teachers_form') echo  'class="active" '; ?> > 
+<!--                           <li <?php if($methd == 'view_student_sections_teachers_form') echo  'class="active" '; ?> > 
                                         <a href="<?php echo base_url()?>studentoffice/view_student_sections_teachers_form">
+                                            <i class="icon-leaf"></i>
+                                           Registered Courses 
+                                        </a>
+                           </li>                                                       -->
+                            
+                           <li <?php if($methd == 'view_offered_courses') echo  'class="active" '; ?> > 
+                                        <a href="<?php echo base_url()?>studentoffice/view_offered_courses">
                                             <i class="icon-leaf"></i>
                                            Offered Courses
                                         </a>

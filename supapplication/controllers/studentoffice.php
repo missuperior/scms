@@ -8,6 +8,7 @@ class Studentoffice extends CI_Controller {
     
     $this->load->model('Admin_model');
     $this->load->model('Manager_model');
+    $this->load->model('Course_model');
     $this->load->model('Admission_r_model');
     $this->load->model('Accounts_model');
     $this->load->model('Examination_model');
@@ -805,7 +806,32 @@ class Studentoffice extends CI_Controller {
             
             $this->load->view('prgmanager/studentsections/view_student_sections_teachers_form_StudentOffice' ,$result);
             $this->load->view('admin_ace/admin_footer');
-        }                    
+        }
+        
+          public function view_offered_courses()
+        {
+            //$this->login_check();
+            $this->load->view('admin_ace/admin_header');
+            $this->load->view('admin_ace/studentoffice_side_menu');
+            
+//            $emp_id                 = $this->session->userdata('employee_id');
+//            $emp_depart_id          = $this->Manager_model->getEmployeeDept( $emp_id );
+            
+            $result['controller']       =   $this->uri->segment(1);
+            $emp_department_id      = 4;
+
+            $current_session        = $this->Course_model->getCurrentSession();
+            $result['session_id']   = $current_session[0]['session_id']; 
+            $result['session']      = $current_session[0]['session']; 
+
+            $result['programms']    = $this->Admin_model->getAllprogramsHR($emp_department_id);
+            $result['all_batches']  = $this->Admin_model->getAllbatches();
+            $result['all_session']  = $this->Admin_model->getAllSessions();
+            
+            $result['OfferedCourse']  = $this->Course_model->cursessionofferedcourses($emp_department_id , $current_session[0]['session_id']);
+            $this->load->view('prgmanager/courseoffered/view_offered_courses' , $result);
+            $this->load->view('admin_ace/admin_footer');
+        }
 
     
     //  *******************  FOR  STUDENT OFFICE ENDDDDDDDDDDDDDDDDDDD  ***************************** //
