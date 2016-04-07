@@ -3612,7 +3612,7 @@ class Examination extends CI_Controller {
 
 
 
-//      echo '<pre>';print_r($result['students']);echo '</pre>';
+//      echo '<pre>';print_r($result['offered']);echo '</pre>';
 
         $this->load->view('admin_ace/admin_header');
         //$this->load->view('examination/cr/classwiseFinalView', $result);

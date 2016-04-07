@@ -23,8 +23,6 @@ class Accounts extends CI_Controller {
 
     $this->load->view('accounts/login');
   }
-  
-  
      
   // for verification of admin login
 
@@ -1389,6 +1387,12 @@ class Accounts extends CI_Controller {
            $student_id                      =   $_GET['student_id'];
            $result['std_package']           =   $this->Accounts_model->getStudentPackageInfo($student_id);
            $result['challan_info']          =   $this->Accounts_model->getChalanInfo($challan_id,$student_id);
+           
+           $due_date                        =   $result['challan_info'][0]['due_date'];
+           $result['installments']          =   $this->Accounts_model->getInstallments($student_id,$due_date);
+           
+           //echo '<pre>'; print_r($result['installments']);die;
+           
            $amount                          =   $result['challan_info'][0]['amount'];
            $amount_in_word                  =   $this->convert_number_to_words($amount);
            
@@ -2300,7 +2304,7 @@ class Accounts extends CI_Controller {
             $result['installments'][] = $this->Accounts_model->getInstallments($std_id,$end_date);            
             $result['amount_in_word'][] = $this->convert_number_to_words($res_ch[$i]['payable']);
           }          
-          //echo '<pre>';var_dump($result);echo '</pre>';exit;
+         // echo '<pre>';var_dump($result);echo '</pre>';exit;
           $this->load->view('accounts/student_package/printAllChallan', $result);
           
           }else{

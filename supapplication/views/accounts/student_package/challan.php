@@ -74,7 +74,7 @@
                 
                
             </div>
-            <div style="float:left; width:980px; height:160px;">
+            <div style="float:left; width:980px; height:160px; margin-bottom: 10px;">
                 <table width="980" border="1" cellpadding="0" cellspacing="0">
                     <tr style="height: 40px; line-height: 40px;">
                         <td colspan="5" style=" width:100%; font-weight:bold; font-size:15px;">  
@@ -107,33 +107,69 @@
                     </tr>
                     
                 </table>
+               
             </div>
-            <div style="width:750px; float:left; margin-top:12px;">
+            
+            <div style="margin-top: 10px">
+                <p style="font-weight:bold; float:left; width: 100%; text-decoration: underline; font-size:15px; margin-bottom: 5px; margin-top: 5px;">Upcoming Installments</p>
+                <?php 
+                $k=1;
+                    foreach($installments as  $roww) {
+                ?>
+                  <p style="font-weight:bold; float:left; margin-left:12px; font-size:15px; margin: 3px;"><?php echo $k.'. ';?>Amount:</p>
+                  <p style="font-weight:bold; float:left; margin-left:12px; font-size:15px; margin: 3px;"><?php echo number_format($roww['payable']); ?> | </p>
+                  <p style="font-weight:bold; float:left; margin-left:12px; font-size:15px; margin: 3px;">Due Date:</p>
+                  <p style="font-weight:bold; float:left; margin-left:12px; font-size:15px; margin: 3px; margin-right: 60px;"><?php echo date('d-M-y', strtotime($roww['due_date'])); ?></p>
+
+                <?php 
+                  $k++; }
+                ?>
+            </div>
+            
+             <div style="width:750px; float:left; margin-top:15px; margin-bottom: 5px;">
+                <?php if($challan['program_name'] == 'MBBS'){?>
+                    <p style="width:750px; font-size:15px;">Note: Rs 1000/- per day will be charged as fine, after the due date. If fees shall not be deposited within 07 days, student should be struck off from the college roll and will be charged Re-admission Fee. Fee once received is Non-refundable & Non-transferable</p>
+                <?php }else{?>
+                    <p style="width:750px; font-size:15px;">Note: Rs 100/- per day will be charged as fine, after the due date. If fees shall not be deposited within 07 days, student should be struck off from the college roll. Fee once received is Non-refundable & Non-transferable</p>
+                <?php } ?>    
+            </div>   
+            <div style="width:160px; float:left; margin-bottom:40px;">
+                <table width="225" height="70px" border="1" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <?php if($i['status'] == 0){?>
+                        <td colspan="5" style="font-size:15px; text-align:center;">&nbsp;&nbsp;&nbsp;Bank Stamp & Signature</td>
+                        <?php }else{?>
+                        <td colspan="5" style="font-size:30px; font-weight:bold; text-align:center;">&nbsp;&nbsp;&nbsp;PAID <p style="font-size:15px; font-weight:normal; text-align:center;"><b>Dated : </b> <?php echo(date("d-M-Y",strtotime($j['post_date']))); ?></p></td>
+                    </tr><?php } ?>
+                </table>   
+            </div>
+            
+<!--            <div style="width:750px; float:left; margin-top:12px;">
                 <?php if($challan['program_name'] == 'MBBS'){?>
                     <p style="width:750px; font-size:15px;">Note: Rs 1000/- per day will be charged as fine, after the due date. If fees shall not be deposited within 07 days, student should be struck off from the college roll and will be charged Re-admission Fee. Fee once received is Non-refundable & Non-transferable</p>
                 <?php }else{?>
                     <p style="width:750px; font-size:15px;">Note: Rs 100/- per day will be charged as fine, after the due date. If fees shall not be deposited within 07 days, student should be struck off from the college roll. Fee once received is Non-refundable & Non-transferable</p>
                 <?php } ?>    
                 
-            <div style="width:160px; float:left; margin-top:12px;  ">
-                <table width="230" height="70px" border="1" cellpadding="0" cellspacing="0">
-                    <tr>
-                        <?php if($challan['status'] == 0){?>
-                        <td colspan="5" style="font-size:15px; text-align:center;">&nbsp;&nbsp;&nbsp;Bank Stamp & Signature</td>
-                        <?php }else{?>
-                        <td colspan="5" style="font-size:30px; font-weight:bold; text-align:center;">&nbsp;&nbsp;&nbsp;PAID <p style="font-size:15px; font-weight:normal; text-align:center;"><b>Dated : </b> <?php echo(date("d- M- Y",strtotime($challan['post_date'])));  ?></p></td>
-                        </tr><?php } ?>
-                </table>   
-            </div>
-            <div style="width:980px; height:30px; margin-bottom: 40px; text-align:center; float:left;">
-                <p style="font-size:22px; font-weight:bold;">Powered By: Superior Solutionz</p>
-            </div>    
+                    <div style="width:160px; float:left; margin-top:12px;  ">
+                        <table width="230" height="70px" border="1" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <?php if($challan['status'] == 0){?>
+                                <td colspan="5" style="font-size:15px; text-align:center;">&nbsp;&nbsp;&nbsp;Bank Stamp & Signature</td>
+                                <?php }else{?>
+                                <td colspan="5" style="font-size:30px; font-weight:bold; text-align:center;">&nbsp;&nbsp;&nbsp;PAID <p style="font-size:15px; font-weight:normal; text-align:center;"><b>Dated : </b> <?php echo(date("d- M- Y",strtotime($challan['post_date'])));  ?></p></td>
+                                </tr><?php } ?>
+                        </table>   
+                    </div>
+                    <div style="width:980px; height:30px; margin-bottom: 40px; text-align:center; float:left;">
+                        <p style="font-size:22px; font-weight:bold;">Powered By: Superior Solutionz</p>
+                    </div>    
             
-            <?php if($i != '3'){?>
-            <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
-            <?php } ?>
+                    <?php if($i != '3'){?>
+                    <p>----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+                    <?php } ?>
 
-        </div>
+            </div>-->
         
         
         <?php } ?>

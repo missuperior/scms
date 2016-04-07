@@ -696,6 +696,7 @@ class Course_model extends CI_Model {
                         . " AND courses.course_type !='Lab' "
                         . "AND offered_courses.program_id='$program_id' order by courses.course_id";
         $query_data = $this->db->query($query);
+//        echo $this->db->last_query();die;
         return $val =  $query_data->result_array();
     }
     

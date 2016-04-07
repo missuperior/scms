@@ -1996,7 +1996,10 @@ function getStudentInstallments2($student_id,$session_id)
         $query      =   $this->db->query("SELECT students.* FROM students
                                         INNER JOIN forms ON forms.form_id = students.form_id
                                         where
-                                        forms.program_id = $program_id AND forms.campaign_id = $campaign_id AND students.status= 'ok' AND students.roll_no != ''
+                                        forms.program_id = $program_id AND
+                                        forms.campaign_id = $campaign_id AND
+                                        students.status= 'ok' AND 
+                                        students.roll_no != ''
                                         ORDER BY students.roll_no ASC
                                          ");
 //        echo $this->db->last_query();die;
