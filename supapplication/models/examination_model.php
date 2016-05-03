@@ -1182,7 +1182,7 @@ function getStudentsMidResult($campaign_id,$program_id,$course_id,$semester){
         $data       = $this->db->query("SELECT  course_id FROM courses WHERE parent_course_id = $course_id AND batch_id = $batch_id" );
         $result     = $data->result_array();
         
-        //echo '<pre>';var_dump($result[0]["course_id"]);echo '</pre>';
+//        echo '<br><pre>';var_dump($result[0]["course_id"]);echo '</pre>';
         
         $course_idl = $result[0]["course_id"];
         //echo $course_idl;

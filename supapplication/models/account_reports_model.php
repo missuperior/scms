@@ -292,7 +292,7 @@ class Account_reports_model extends CI_Model {
                  
                   }
          
-                  //echo $this->db->last_query();die;
+                 // echo $this->db->last_query();die;
 
                     return $rows = $query->result_array();        
     }
@@ -1376,7 +1376,7 @@ class Account_reports_model extends CI_Model {
         if($campus_id == 1 || $campus_id == 3){
             $campus         =   "AND (forms.campus_id = 1 OR forms.campus_id = 3)"  ;
         }else{
-                if($this->session->userdata('account_role_id') == 5){  $campus   =  "AND forms.campus_id = ".$campus_id ;   }
+                if($this->session->userdata('account_role_id') == 5 ||  $this->session->userdata('account_role_id') == 4){  $campus   =  "AND forms.campus_id = ".$campus_id ;   }
                  else{ $campus   =   "AND forms.campus_id = ".$this->session->userdata('campus_id') ; }
         }
         
@@ -1434,7 +1434,7 @@ class Account_reports_model extends CI_Model {
                                             ORDER BY srf.program_id ASC
                             ");
              }
-      // echo $this->db->last_query();die;
+//      echo $this->db->last_query();die;
       return $query->result_array();      
         
     }

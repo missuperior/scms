@@ -434,4 +434,25 @@ class Test_model extends CI_Model {
     }
     
     
+    function getStudentsInfo($campaing_id,$program_id){
+    
+        $query          =   $this->db->query("SELECT student_id,roll_no,status
+                                                FROM students
+                                                INNER JOIN forms ON forms.`form_id` = students.`form_id`
+                                                WHERE
+                                                forms.`campaign_id` = $campaing_id AND
+                                                forms.`program_id`  = $program_id AND
+                                                students.`status`   = 'ok' AND
+                                                students.`roll_no`  != ''
+
+                                                ORDER BY roll_no ASC");
+        
+        return          $query->result_array();
+                
+    }
+    
+    function generateLogin($data){          
+        $query = $this->db->insert('student_logins', $data); 		
+        return $this->db->insert_id();
+    }
 }

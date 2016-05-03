@@ -114,9 +114,10 @@
                                                   $gpa = 0;
                                                    $marks=0;
                                                    $credit_hours=0;
-                                             foreach ($offered as $cr){ ?>
+                                             foreach ($offered as $key=>$cr){ ?>
                                                   <td> 
-                                                <?php  $labi       =  $this->Examination_model->getLabMarks($students[$c]['student_id'],$batch_id,$cr['course_id'], $session_id);
+                                                <?php                                                    
+                                                  $labi       =  $this->Examination_model->getLabMarks($students[$c]['student_id'],$batch_id,$cr['course_id'], $session_id);
                                                   $student_marks  =   $this->Examination_model->SingleSubjectMarks_cr_Jal($cr['program_id'],$section,$cr['batch_id'],$cr['session_id'], $students[$c]['student_id'], $cr['course_id']);
                                                   
                                                   if(!empty($student_marks)) {

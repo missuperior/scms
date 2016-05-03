@@ -18,6 +18,8 @@ class Test extends CI_Controller {
   // Login for Admissions
   public function index() {
       
+      echo phpinfo();die;
+      
            $to_time = strtotime("2008-12-12 19:00:00");
 $from_time = strtotime("2008-12-13 04:00:00");
 echo round(abs($to_time - $from_time) / 60,2). " minute";
@@ -126,6 +128,24 @@ echo round(abs($to_time - $from_time) / 60,2). " minute";
       }
       
       
+  }
+  
+  
+  public function generate_student_logins(){
+      
+      $campaing_id      =   1;      // Fall 2014
+      $program_id       =   11;       // MIT(Morning)
+      
+      $students         =   $this->Test_model->getStudentsInfo($campaing_id,$program_id);
+      
+      //echo '<pre>';            print_r($students);die;
+      
+      foreach($students AS $row){
+          
+          $data         =   array('student_id' => $row['student_id'],'roll_no' => $row['roll_no'], 'password' => '21a2f903885172b4503e6f5eaf6b78880f4712cc', 'status' => 1);
+          $result       =   $this->Test_model->generateLogin($data);
+      }
+      die('Logins Generated Successfully');
   }
   
   
