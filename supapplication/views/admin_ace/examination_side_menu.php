@@ -343,7 +343,17 @@
                         Add | View Result
                         <b class="arrow icon-angle-down"></b>
                     </a>                                      
-                </li>    
+                </li> 
+                
+                
+                <li <?php if ($methd == 'add_single_student_result_form' ) echo 'class="active" '; ?> > 
+                    <a href="<?php echo base_url();?>teachers/add_single_student_result_form" >
+                        Add Single Student Result
+                        <b class="arrow icon-angle-down"></b>
+                    </a>                                      
+                </li> 
+                
+                
                  
                 <li <?php if ($methd == 'cr_search_result_all' ) echo 'class="active" '; ?> > 
                     <a href="<?php echo base_url();?>examination/cr_search_result_all" >

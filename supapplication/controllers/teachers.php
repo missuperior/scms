@@ -1050,6 +1050,335 @@ class teachers extends CI_Controller {
                                   
                                }
   }
+  
+  
+  // Add Single Student Result
+  
+   // Start for result
+    
+     public function add_single_student_result_form()
+    {
+        $this->login_check();
+    
+        $result['batches']      =   $this->Teachers2_model->getAllbatches();
+        $result['sessions']     =   $this->Teachers2_model->getAllSessions();
+        $result['programs']     =   $this->Admin_model->getAllprogramsHR(4);
+
+        $this->load->view('admin_ace/admin_header');
+        $this->load->view('admin_ace/examination_side_menu');
+        $this->load->view('teachers/examination/singleStudent/all_courses2_form',$result);
+        $this->load->view('admin_ace/admin_footer');
+    }
+    
+     public function get_Students_list() {
+
+       
+        $program_id         = $_POST['program_id'];
+        $batch_id           = $_POST['batch_id'];
+        $session_id         = $_POST['session_id'];
+
+        $result['rollno'] = $this->Teachers2_model->getStudentsRollNo($batch_id,$program_id);
+        // echo '<pre>'; print_r($result);die;
+
+        $this->load->view('teachers/examination/singleStudent/rollno_partial', $result);
+    }
+    
+     public function add_single_student_result()
+    {
+      $this->login_check();
+    
+      $session_id             = $_REQUEST['session'];
+      $batch_id               = $_REQUEST['batch'];
+      $program_id             = $_REQUEST['program'];
+      $array                  = $_REQUEST['roll_no'];
+      
+      $res                    = explode(',', $array);
+      
+      $result['student_id']   = $res[0];
+//      echo '<pre>'; print_r($res);die;
+      
+      $result['info']         = $this->Teachers2_model->getAllocatedCourseSectionLatest_singleStudent($res[0],$session_id,$batch_id,$program_id);
+//      echo '<pre>'; print_r($result);die;
+        $i = 0;
+        foreach($result['info'] AS $row){
+            $check_data             =  array(
+                                        'teacher_id'            =>  $row['teacher_id'],
+                                        'program_id'            =>  $row['program_id'],
+                                        'course_id'             =>  $row['course_id'],
+                                        'section'               =>  $row['course_section'],
+                                        'batch_id'              =>  $row['batch_id'],
+                                        'session_id'            =>  $row['current_session_id']
+                                    );  
+            
+            $resmid          =   $this->Teachers2_model->checkMidStructure($check_data);
+            if($resmid){$result['mid'][$i] = 1;}else{$result['mid'][$i] = 0;}
+            $resfinal        =   $this->Teachers2_model->checkFinalStructure($check_data);
+            if($resfinal){$result['final'][$i] = 1;}else{$result['final'][$i] = 0;}
+
+            $i++;
+        }
+      
+      $this->load->view('admin_ace/admin_header');
+      $this->load->view('admin_ace/examination_side_menu');
+      $this->load->view('teachers/examination/singleStudent/all_courses2',$result);
+      $this->load->view('admin_ace/admin_footer');
+    }
+    
+     public function students_list_for_mid_SingleStudent()
+    {
+        
+        
+        $this->login_check();
+        $course_id                  =   $_GET['course_id'];  
+        $program_id                 =   $_GET['program_id'];  
+        $semester                   =   $_GET['semester'];  
+        $section                    =   $_GET['course_section'];  
+        $batch_id                   =   $_GET['batch_id'];  
+        $session_id                 =   $_GET['session_id'];
+        $teacher_id                 =   $_GET['teacher_id'];    
+        $result['student_id']       =   $_GET['student_id'];    
+//getStudentCourseSection
+
+        //$result['students']     = $this->Teachers2_model->getStudentCourseSection($teacher_id,$program_id, $current_session_id,$semester, $section);
+        $result['students']         =   $this->Teachers2_model->getStudentCourseSectionLatest_SingleStudent($teacher_id,$program_id, $session_id,$semester, $section, $batch_id , $course_id);
+        $result['session_id']       =   $session_id; 
+        $result['course_id']        =   $course_id; 
+        $result['teacher_id']       =   $teacher_id; 
+        $result['program_id']       =   $program_id; 
+        $result['batch_id']         =   $batch_id; 
+        $result['section']          =   $section; 
+        
+        
+        $check_data             =   array(
+                                        'teacher_id'            =>  $teacher_id,
+                                        'program_id'            =>  $program_id,
+                                        'course_id'             =>  $course_id,
+                                        'section'               =>  $section,
+                                        'batch_id'              =>  $batch_id
+                                        //'semester'              =>  $semester
+                                    );
+        
+        $res          =   $this->Teachers2_model->getMidStructure($check_data); 
+
+        if(count($res) == 0){
+            $this->session->set_userdata('error_msg', 'Mid Term structure not defined, Please define the Mid Term atructure then add result.');
+            redirect('teachers/add_view_result_form');
+        }
+
+        $result['mid']   =   $res;
+       
+        $this->load->view('admin_ace/admin_header');
+        $this->load->view('admin_ace/examination_side_menu');
+        $this->load->view('teachers/examination/singleStudent/mid_std_list',$result);
+        $this->load->view('admin_ace/admin_footer');
+    }
+    
+     public function add_mid_result_SingleStudent()
+    {
+       $this->login_check();
+      
+       $session_id              =       $_POST['session_id'];
+       $batch_id                =       $_POST['batch_id'];
+       $course_id               =       $_POST['course_id'];
+       $program_id              =       $_POST['program_id'];
+       $semester                =       $_POST['semester'];
+       $course_section          =       $_POST['course_section'];
+       $teacher_id              =       $_POST['teacher_id'];
+       
+       $student_id              =       $_POST['student_id'];
+       
+       $title1                  =       $_POST['title1'];
+       $title2                  =       $_POST['title2'];
+       $title3                  =       $_POST['title3'];
+       
+       $marks_1                 =       $_POST['o_marks1'];
+       $marks_2                 =       $_POST['o_marks2'];
+       $marks_3                 =       $_POST['o_marks3'];
+       $status                  =       $_POST['status'];
+ 
+       
+      
+       $total_stus              =       count($student_id);
+       
+       
+//       echo '<pre>';
+//       var_dump($_POST);
+//       echo '</pre>';
+//       echo '<pre>';
+//       var_dump($total_stus);
+//       echo '</pre>';die;
+       
+       
+      for($i=0; $i < $total_stus; $i++)
+      {
+                $mid_result             =      array(
+                                                    'student_id'            =>  $student_id[$i],
+                                                    'session_id'            =>  $session_id,
+                                                    'course_id'             =>  $course_id,
+                                                    'teacher_id'            =>  $teacher_id,                                            
+                                                    'mid_title_1'           => $title1,
+                                                    'mid_value_1'           => str_replace('', 0, $marks_1[$i]),
+                                                    'mid_title_2'           => $title2,
+                                                    'mid_value_2'           => str_replace('', 0, $marks_2[$i]),
+                                                    'mid_title_3'           => $title3,
+                                                    'mid_value_3'           => str_replace('', 0, $marks_3[$i]),
+                                                    'status'                => $status[$i],
+                                                    'created_date'          => date('Y-m-d'),
+                                                    'batch_id'              => $batch_id,
+                                                    'program_id'            => $program_id,
+                                                    'section'               => $course_section,
+                                                    'operator_id'           => $this->session->userdata('sub_login_id')
+                                                );
+                    
+                $mid_result_id[]        =   $this->Teachers2_model->AddMidResult($mid_result); 
+
+                if(!$mid_result_id){
+                        $this->session->set_userdata('error_msg', 'Mid Term Result Not Added, Please try again.');
+                        redirect('teachers/add_single_student_result_form');
+                }
+                
+      }
+      
+               
+        $this->session->set_userdata('error_msg', 'Mid Term Result Added Successfully.');
+        redirect('teachers/add_single_student_result_form');
+      
+    }
+    
+    
+     public function students_list_for_final_SingleStudent()
+    {
+        $this->login_check();
+        $course_id              =   $_GET['course_id'];  
+        $program_id             =   $_GET['program_id'];  
+        $semester               =   $_GET['semester'];  
+        $section                =   $_GET['course_section'];  
+        $teacher_id             =   $_GET['teacher_id'];    
+        //$current_session_id         =   $this->session->userdata('current_session_id'); 
+        $current_session_id     =   $_GET['session_id'];  
+        $batch_id               =   $_GET['batch_id'];  
+            
+        $result['student_id']       =   $_GET['student_id']; 
+
+        $result['students']     =   $this->Teachers2_model->getStudentCourseSectionLatest_SingleStudent($teacher_id,$program_id, $current_session_id,$semester, $section , $batch_id, $course_id);
+        $result['session_id']   =   $current_session_id; 
+        $result['course_id']    =   $course_id; 
+        $result['teacher_id']   =   $teacher_id; 
+        $result['program_id']   =   $program_id; 
+        $result['batch_id']     =   $batch_id; 
+        $result['section']     =   $section; 
+        
+        
+        //echo '<pre>';var_dump($result['students']);exit;
+        $check_data             =   array(
+                                            'teacher_id'            =>  $teacher_id,
+                                            'program_id'            =>  $program_id,
+                                            'course_id'             =>  $course_id,
+                                            'section'               =>  $section,
+                                            'batch_id'              =>  $batch_id,
+                                            'session_id'            =>  $current_session_id
+                                            );
+        
+        $res          =   $this->Teachers2_model->getFianlStructure($check_data); 
+
+        if(count($res) == 0){
+            $this->session->set_userdata('error_msg', 'Final Term structure not defined, Please define the Final Term atructure then add result.');
+            redirect('teachers/all_courses_form');
+        }
+
+        $result['final']   =   $res;
+
+//        echo '<pre>';//        var_dump($result['final']);//        echo '</pre>';
+//        die;
+        $this->load->view('admin_ace/admin_header');
+        $this->load->view('admin_ace/examination_side_menu');
+        $this->load->view('teachers/examination/singleStudent/final_std_list',$result);
+        $this->load->view('admin_ace/admin_footer');
+    }
+    
+    public function add_final_result_SingleStudent()
+    {
+        
+        $this->login_check();
+
+        $session_id              =       $_POST['session_id'];              
+        $batch_id                =       $_POST['batch_id'];              
+        $course_id               =       $_POST['course_id'];       
+        $program_id              =       $_POST['program_id'];
+        $semester                =       $_POST['semester'];       
+        $course_section          =       $_POST['course_section'];       
+        $course_type             =       $_POST['course_type'];       
+        $teacher_id              =       $_POST['teacher_id'];
+       
+        $student_id              =       $_POST['student_id'];
+
+        $title1                  =       $_POST['title1'];
+        $title2                  =       $_POST['title2'];
+        $title3                  =       $_POST['title3'];
+        $title4                  =       $_POST['title4'];
+        $title5                  =       $_POST['title5'];
+        $title6                  =       $_POST['title6'];
+        $title7                  =       $_POST['title7'];
+       
+        $marks_1                 =       $_POST['o_marks1'];
+        $marks_2                 =       $_POST['o_marks2'];
+        $marks_3                 =       $_POST['o_marks3'];
+        $marks_4                 =       $_POST['o_marks4'];
+        $marks_5                 =       $_POST['o_marks5'];
+        $marks_6                 =       $_POST['o_marks6'];
+        $marks_7                 =       $_POST['o_marks7'];
+
+        $status                  =       $_POST['status'];
+       
+       
+        foreach($student_id as $i => $p)
+        {
+            
+                 $final_result              =       array(
+                                                                 'student_id'              =>  $p,
+                                                                 'teacher_id'              =>  $teacher_id,                                            
+                                                                 'session_id'              =>  $session_id,
+                                                                 'course_id'               =>  $course_id,
+                                                                 
+                                                                 'final_title_1'           => $title1,
+                                                                 'final_value_1'           => str_replace('', 0, $marks_1[$i]),
+                                                                 'final_title_2'           => $title2,
+                                                                 'final_value_2'           => str_replace('', 0, $marks_2[$i]),
+                                                                 'final_title_3'           => $title3,
+                                                                 'final_value_3'           => str_replace('', 0, $marks_3[$i]),
+                                                                 'final_title_4'           => $title4,
+                                                                 'final_value_4'           => str_replace('', 0, $marks_4[$i]),
+                                                                 'final_title_5'           => $title5,
+                                                                 'final_value_5'           => str_replace('', 0, $marks_5[$i]),
+                                                                 'final_title_6'           => $title6,
+                                                                 'final_value_6'           => str_replace('', 0, $marks_6[$i]),
+                                                                 'final_title_7'           => $title7,
+                                                                 'final_value_7'           => str_replace('', 0, $marks_7[$i]),
+                                                                 'status'                  => $status[$i],
+                                                                 'post_date'               => '0000-00-00',
+                                                                 'created_date'            => date('Y-m-d'),
+                                                                 'batch_id'                =>  $batch_id,
+                                                                 'program_id'            => $program_id,
+                                                                 'section'               => $course_section,
+                                                                 'operator_id'           => $this->session->userdata('sub_login_id')
+                                                                 );
+                    
+                    
+                        $final_result_id[]          =   $this->Teachers2_model->AddFinalResult($final_result); 
+                        
+                        if(!$final_result_id){
+                                $this->session->set_userdata('error_msg', 'Final Term Result Not Added, Please try again.');
+                                redirect('teachers/add_final_result_form/?course_id='.$course_id.'&program_id='.$program_id.'&semester='.$semester.'&course_section='.$course_section.'&student_id='.$student_id.'&session_id='.$session_id);
+                        }
+                
+        }
+                
+        $this->session->set_userdata('error_msg', 'Final Term Result Added Successfully.');
+        redirect('teachers/add_view_result_form');
+    }
+    
+    
+    
  
   
 }

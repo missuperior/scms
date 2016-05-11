@@ -34,6 +34,8 @@ class Teachers2_model extends CI_Model {
                     return $query_data->result_array();
             }
             
+       
+            
             
         function checkteacher_course($teacher_id,$course_id,$course_section,$batch_id,$program_id,$session)
                 {
@@ -93,8 +95,38 @@ class Teachers2_model extends CI_Model {
                                 and course_section = '$section' order by students.roll_no asc";
 
                     $query_data = $this->db->query($query);
+//                    echo $this->db->last_query();die;
+                    return $query_data->result_array();
+        
+                    } 
+                
+        function getStudentCourseSectionLatest_SingleStudent($teacher_id,$program_id, $session_id,$semester, $section, $batch_id, $course_id)
+                {
+        
+                    $query = " SELECT * FROM
+                                `student_course_sections` 
+                                INNER JOIN courses on `student_course_sections`.COURSE_ID = `courses`.course_id 
+                                INNER JOIN programs on `student_course_sections`.program_id = `programs`.program_id 
+                                INNER JOIN students on `student_course_sections`.student_id = `students`.student_id 
+                                INNER JOIN forms on `forms`.form_id = `students`.form_id 
+
+
+                                where teacher_id = $teacher_id
+                                and student_course_sections.current_session_id = $session_id
+                                and students.batch_id = $batch_id
+                                and student_course_sections.program_id = $program_id
+                                and student_course_sections.course_id = $course_id
+                                order by students.roll_no asc";
+
+                    $query_data = $this->db->query($query);
+//                    echo $this->db->last_query();die;
                     return $query_data->result_array();
                 } 
+                
+                
+                
+                
+                
         function getMidResult($data)
                 {
                     $query = $this->db->get_where('mid_result', $data);		
@@ -771,6 +803,62 @@ class Teachers2_model extends CI_Model {
         
         $query_data = $this->db->query($query);
         return $query_data->result_array();
+    }
+    
+    
+    function getStudentsRollNo($batch_id,$program_id){
+        
+         $query = $this->db->query("SELECT students.student_id,students.roll_no,forms.student_name
+                    FROM students
+                    INNER JOIN forms ON forms.form_id = students.form_id
+                    WHERE
+                    students.batch_id   =   $batch_id AND
+                    forms.program_id    =   $program_id AND
+                    students.roll_no    !=  '' AND
+                    students.status     =   'ok'
+                    ORDER BY students.roll_no desc
+                ");
+         
+//         echo $this->db->last_query();die;
+        
+        return $query->result_array();
+        
+        
+    }
+    
+     function getAllocatedCourseSectionLatest_singleStudent($student_id,$current_session_id,$batch_id,$program_id)
+            {            
+                    $query      = "SELECT * ,courses.* FROM `student_course_sections` 
+                                    INNER JOIN courses on `student_course_sections`.course_id = `courses`.course_id 
+                                    INNER JOIN programs on `student_course_sections`.program_id = `programs`.program_id 
+                                    INNER JOIN sessions on `student_course_sections`.current_session_id = `sessions`.session_id 
+                                    WHERE  
+                                    student_id              =  $student_id 
+                                    AND teacher_id          != ''
+                                    AND current_session_id  = $current_session_id 
+                                    AND student_course_sections.batch_id            = $batch_id 
+                                    AND student_course_sections.program_id            = $program_id 
+                                    GROUP BY `student_course_sections`.course_id,`student_course_sections`.program_id";
+
+                    $query_data = $this->db->query($query);
+                    //echo $this->db->last_query();die;
+                    return $query_data->result_array();
+            }
+            
+    function CheckMidResult_SingleStudent($check_data)
+    {
+        //echo '<br><pre>'; print_r($check_data);
+        $query = $this->db->get_where('mid_result', $check_data);
+        //echo $this->db->last_query();die;
+        //return $query->result_array();
+        return $query->num_rows();
+    }
+    
+    function CheckFinalResult_SingleStudent($check_data)
+    {
+        $query = $this->db->get_where('final_result', $check_data);
+        //return $query->result_array();
+        return $query->num_rows();
     }
     
     
